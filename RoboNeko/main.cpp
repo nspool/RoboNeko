@@ -86,8 +86,45 @@ int main(int argc, const char * argv[]) {
     SDL_Texture* gRobitsTexture = SDL_CreateTextureFromSurface( gRenderer, gRobits );
     SDL_SetTextureColorMod( gRobitsTexture, 255, 25, 25 );
     
-    // Just to make sure that the window is created..
-    SDL_Delay( 2000 );
+    // Setup Robit animation
+    gSpriteClips[ 0 ].x =   0;
+    gSpriteClips[ 0 ].y =   0;
+    gSpriteClips[ 0 ].w =  32;
+    gSpriteClips[ 0 ].h = 32;
+    
+    gSpriteClips[ 1 ].x =  32;
+    gSpriteClips[ 1 ].y =  0;
+    gSpriteClips[ 1 ].w =  32;
+    gSpriteClips[ 1 ].h = 32;
+    
+    gSpriteClips[ 2 ].x = 64;
+    gSpriteClips[ 2 ].y =   0;
+    gSpriteClips[ 2 ].w =  32;
+    gSpriteClips[ 2 ].h = 32;
+    
+    bool quit = false;
+    
+    // event handler
+    SDL_Event e;
+    int frame = 0;
+    
+    // Main event loop
+    do {
+        while(SDL_PollEvent(&e) != 0)
+        {
+            // User requests quit
+            if(e.type == SDL_QUIT)
+            {
+                quit = true;
+            }
+        }
+    } while(!quit);
+        
+        
+    // 1) Replace the above with an event loop
+    // 2) Then put the robot on the screen
+    // 3) Then animate the robot
+    // 4) Then animate at some fixed framerate
     
     //Destroy window
     SDL_DestroyWindow( window );
