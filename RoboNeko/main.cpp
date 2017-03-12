@@ -7,6 +7,9 @@
 //
 
 #include <iostream>
+
+#include <math.h>
+
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
@@ -17,11 +20,11 @@ const int SCREEN_HEIGHT = 480;
 const int SPRITE_WIDTH = 32;
 const int SPRITE_ANIMATION_LEN = 3;
 
-TTF_Font *mFont = NULL;
-SDL_Window* mWindow = NULL;
-SDL_Surface* mScreenSurface = NULL;
-SDL_Surface* mBackground = NULL;
-SDL_Renderer* mRenderer = NULL;
+TTF_Font *mFont = 0;
+SDL_Window* mWindow = 0;
+SDL_Surface* mScreenSurface = 0;
+SDL_Surface* mBackground = 0;
+SDL_Renderer* mRenderer = 0;
 SDL_Rect mSpriteClips[ 3 ];
 
 int mAnimationRate = 12;
@@ -29,129 +32,159 @@ int mStartTime = SDL_GetTicks();
 
 SDL_Surface *load_image(std::string filename)
 {
-    SDL_Surface* loadedImage = NULL;
-    SDL_Surface* optimisedImage = NULL;
-    loadedImage = SDL_LoadBMP(filename.c_str());
-    if(loadedImage != NULL)
-    {
-        optimisedImage = SDL_ConvertSurface(loadedImage, mScreenSurface->format, NULL);
-    }
-    SDL_FreeSurface(loadedImage);
-    return optimisedImage;
+  SDL_Surface* loadedImage = 0;
+  SDL_Surface* optimisedImage = 0;
+  loadedImage = SDL_LoadBMP(filename.c_str());
+  if(loadedImage != 0)
+  {
+    optimisedImage = SDL_ConvertSurface(loadedImage, mScreenSurface->format, 0);
+  }
+  SDL_FreeSurface(loadedImage);
+  return optimisedImage;
 }
 
 int main(int argc, const char * argv[]) {
-    
-    if(SDL_Init(SDL_INIT_EVERYTHING) < 0 )
+  
+  if(SDL_Init(SDL_INIT_EVERYTHING) < 0 )
+  {
+    std::cout << "Failed to initialise SDL!" << std::endl;
+    return 1;
+  }
+  
+  //Initialize PNG loading
+  int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+  if( !( IMG_Init( imgFlags ) & imgFlags ) )
+  {
+    std::cout << "Failed to initialise SDL_image!" << std::endl;
+    return 1;
+  }
+  
+  //Create window
+  mWindow = SDL_CreateWindow( "RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+  SDL_SetWindowTitle(mWindow, "RoboNeko");
+  
+  if( mWindow == 0 )
+  {
+    printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+    return 1;
+  }
+  
+  mRenderer = SDL_CreateRenderer( mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+  
+  if( mRenderer == 0 )
+  {
+    printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+    return 1;
+  }
+  
+  //Initialize renderer color
+  SDL_SetRenderDrawColor( mRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+  
+  // Load the robit
+  SDL_Surface* gRobits = IMG_Load( "robits.png" );
+  SDL_Surface* gTextureImage = IMG_Load( "tex.png" );
+  
+  if(gRobits == 0 || gTextureImage == 0)
+  {
+    printf( "Failed to load images! SDL_Error: %s\n", SDL_GetError() );
+    return 1;
+  }
+  
+  // TODO: background texture
+  //    SDL_Texture* gTexture = SDL_CreateTextureFromSurface( gRenderer, gTextureImage );
+  SDL_Texture* gRobitsTexture = SDL_CreateTextureFromSurface( mRenderer, gRobits );
+  SDL_SetTextureColorMod( gRobitsTexture, 255, 25, 25 );
+  
+  // Setup Robit animation
+  mSpriteClips[ 0 ].x =   0;
+  mSpriteClips[ 0 ].y =   0;
+  mSpriteClips[ 0 ].w =  32;
+  mSpriteClips[ 0 ].h = 32;
+  
+  mSpriteClips[ 1 ].x =  32;
+  mSpriteClips[ 1 ].y =  0;
+  mSpriteClips[ 1 ].w =  32;
+  mSpriteClips[ 1 ].h = 32;
+  
+  mSpriteClips[ 2 ].x = 64;
+  mSpriteClips[ 2 ].y =   0;
+  mSpriteClips[ 2 ].w =  32;
+  mSpriteClips[ 2 ].h = 32;
+  
+  bool quit = false;
+  
+  // event handler
+  SDL_Event e;
+  
+  SDL_Point p = {0, 200};
+  double rad = M_PI_2;
+  
+  int mouseX = 0;
+  int mouseY = 0;
+  double xDelta = 0, yDelta = 0;
+  
+  // Main event loop
+  
+  do {
+    while(SDL_PollEvent(&e) != 0)
     {
-        std::cout << "Failed to initialise SDL!" << std::endl;
-        return 1;
+      switch (e.type) {
+        case SDL_QUIT:
+          quit = true;
+        case SDL_MOUSEMOTION:
+          SDL_GetMouseState( &mouseX, &mouseY );
+        default:
+          break;
+      }
     }
     
-    //Initialize PNG loading
-    int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
-    if( !( IMG_Init( imgFlags ) & imgFlags ) )
-    {
-        std::cout << "Failed to initialise SDL_image!" << std::endl;
-        return 1;
+
+    rad = atan2((mouseY - p.y), (mouseX - p.x));
+    
+    // Update |p| to new position
+    xDelta += cos(rad);
+    yDelta += sin(rad);
+    if(xDelta > 1){
+      p.x += 1;
+      xDelta = 0;
     }
-    
-    //Create window
-    mWindow = SDL_CreateWindow( "RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-    SDL_SetWindowTitle(mWindow, "RoboNeko");
-    
-    if( mWindow == NULL )
-    {
-        printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-        return 1;
+    if(yDelta > 1){
+      p.y += 1;
+      yDelta = 0;
     }
-    
-    mRenderer = SDL_CreateRenderer( mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-    
-    if( mRenderer == NULL )
-    {
-        printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
-        return 1;
+    if(xDelta < -1){
+      p.x -= 1;
+      xDelta = 0;
     }
+    if(yDelta < -1){
+      p.y -= 1;
+      yDelta = 0;
+    }
+    printf("%f %f\n", xDelta, yDelta);
+    // Bounds
+    if(p.x < 0) { rad = 2 * M_PI; }
+    if((p.x + SPRITE_WIDTH) > SCREEN_WIDTH) { rad = M_PI; }
     
-    //Initialize renderer color
+    if(p.y < 0) { rad = M_PI_2; }
+    if((p.y + SPRITE_WIDTH) > SCREEN_HEIGHT) { rad = -M_PI_2; }
+    
+    // Clear window
     SDL_SetRenderDrawColor( mRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-
-    // Load the robit
-    SDL_Surface* gRobits = IMG_Load( "robits.png" );
-    SDL_Surface* gTextureImage = IMG_Load( "tex.png" );
+    SDL_RenderClear( mRenderer );
     
-    if(gRobits == NULL || gTextureImage == NULL)
-    {
-        printf( "Failed to load images! SDL_Error: %s\n", SDL_GetError() );
-        return 1;
-    }
+    // Animate at some fixed framerate
+    int frameToDraw = ((SDL_GetTicks() - mStartTime) * mAnimationRate / 1000) % SPRITE_ANIMATION_LEN;
+    SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
+    SDL_RenderCopy( mRenderer, gRobitsTexture, &mSpriteClips[frameToDraw], &robitLoc );
+    SDL_RenderPresent( mRenderer );
     
-    // TODO: background texture
-//    SDL_Texture* gTexture = SDL_CreateTextureFromSurface( gRenderer, gTextureImage );
-    SDL_Texture* gRobitsTexture = SDL_CreateTextureFromSurface( mRenderer, gRobits );
-    SDL_SetTextureColorMod( gRobitsTexture, 255, 25, 25 );
-    
-    // Setup Robit animation
-    mSpriteClips[ 0 ].x =   0;
-    mSpriteClips[ 0 ].y =   0;
-    mSpriteClips[ 0 ].w =  32;
-    mSpriteClips[ 0 ].h = 32;
-    
-    mSpriteClips[ 1 ].x =  32;
-    mSpriteClips[ 1 ].y =  0;
-    mSpriteClips[ 1 ].w =  32;
-    mSpriteClips[ 1 ].h = 32;
-    
-    mSpriteClips[ 2 ].x = 64;
-    mSpriteClips[ 2 ].y =   0;
-    mSpriteClips[ 2 ].w =  32;
-    mSpriteClips[ 2 ].h = 32;
-    
-    bool quit = false;
-    
-    // event handler
-    SDL_Event e;
-    int x = 0;
-    
-    // TODO: needs to be a vector
-    int v = 1;
-    
-    // Main event loop
-    
-    do {
-        while(SDL_PollEvent(&e) != 0)
-        {
-            if(e.type == SDL_QUIT)
-            {
-                quit = true;
-            }
-        }
-        
-        // Calculate new position
-        if(x > SCREEN_WIDTH - SPRITE_WIDTH) { v = -1; }
-        if(x < 0) { v = 1; }
-        
-        x += v;
-        
-        SDL_Rect robitLoc = { x, 200, 32, 32 };
-
-        // Clear window
-        SDL_SetRenderDrawColor( mRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-        SDL_RenderClear( mRenderer );
-
-        // Animate at some fixed framerate
-        int frameToDraw = ((SDL_GetTicks() - mStartTime) * mAnimationRate / 1000) % SPRITE_ANIMATION_LEN;
-        SDL_RenderCopy( mRenderer, gRobitsTexture, &mSpriteClips[frameToDraw], &robitLoc );
-        SDL_RenderPresent( mRenderer );
-        
-    } while(!quit);
-    
-    //Destroy window
-    SDL_DestroyWindow( mWindow );
-    
-    //Quit SDL subsystems
-    SDL_Quit();
-    
-    return 0;
+  } while(!quit);
+  
+  //Destroy window
+  SDL_DestroyWindow( mWindow );
+  
+  //Quit SDL subsystems
+  SDL_Quit();
+  
+  return 0;
 }

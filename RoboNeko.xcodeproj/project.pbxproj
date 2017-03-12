@@ -51,7 +51,10 @@
 				735C248B1E6FFFDB00D37174 /* Products */,
 				735C24941E70000E00D37174 /* Frameworks */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
 		};
 		735C248B1E6FFFDB00D37174 /* Products */ = {
 			isa = PBXGroup;
@@ -270,6 +273,7 @@
 				735C24931E6FFFDB00D37174 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
