@@ -27,7 +27,8 @@ SDL_Renderer* _renderer = 0;
 int _startTime = SDL_GetTicks();
 int mouseX = 0;
 int mouseY = 0;
-
+int oldMouseX = 0;
+int oldMouseY = 0;
 
 
 class Robit
@@ -37,6 +38,7 @@ public:
   static const int SPRITE_ANIMATION_LEN = 3;
   Robit();
   void doEvent();
+  void stop();
   SDL_Point p = {0, 200};
 private:
   double rad = M_PI_2;
@@ -78,8 +80,23 @@ Robit::Robit()
   SDL_SetTextureColorMod( gRobitsTexture, 255, 25, 25 );
 }
 
+void Robit::stop()
+{
+  SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
+  SDL_RenderCopy( _renderer, gRobitsTexture, &spriteClips[1], &robitLoc );
+}
+
 void Robit::doEvent()
 {
+  
+  if(oldMouseX == mouseX && oldMouseY == mouseY) {
+    stop();
+    return;
+  }
+  
+  oldMouseY = mouseY;
+  oldMouseX = mouseX;
+  
   // Update |p| to new position
   rad = atan2((mouseY - p.y), (mouseX - p.x));
   xDelta += cos(rad);
@@ -165,15 +182,11 @@ int main(int argc, const char * argv[]) {
   //    SDL_Texture* gTexture = SDL_CreateTextureFromSurface( gRenderer, gTextureImage );
 
   
-
-  
   bool quit = false;
   
   // event handler
   SDL_Event e;
   
-
-
   Robit* r1 = new Robit();
   Robit* r2 = new Robit();
   r2->p = {0, 100};
@@ -198,7 +211,7 @@ int main(int argc, const char * argv[]) {
     SDL_RenderClear( _renderer );
     
     r1->doEvent();
-    r2->doEvent();
+//    r2->doEvent();
     
     SDL_RenderPresent( _renderer );
     
