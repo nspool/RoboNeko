@@ -25,11 +25,28 @@ SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
 
 int _startTime = SDL_GetTicks();
+int _lastTransition = SDL_GetTicks();
 int mouseX = 0;
 int mouseY = 0;
 int oldMouseX = 0;
 int oldMouseY = 0;
+int currentTranceDirection = 0;
 
+class Markov
+{
+public:
+  int GetNextState();
+private:
+};
+
+int Markov::GetNextState()
+{
+  int next = arc4random_uniform(4);
+  printf("next: %d\n", next);
+  return next;
+}
+
+Markov* m;
 
 class Robit
 {
@@ -53,7 +70,7 @@ Robit::Robit()
 {
   // Load the robit
   SDL_Surface* gRobits = IMG_Load( "robits.png" );
-//  SDL_Surface* gTextureImage = IMG_Load( "tex.png" );
+  //  SDL_Surface* gTextureImage = IMG_Load( "tex.png" );
   
   if(gRobits == 0) // || gTextureImage == 0)
   {
@@ -90,15 +107,45 @@ void Robit::doEvent()
 {
   
   if(oldMouseX == mouseX && oldMouseY == mouseY) {
-    stop();
-    return;
+    //    stop();
+    if((SDL_GetTicks() > (_lastTransition + 1000))){
+      // Get a new direction
+      _lastTransition = SDL_GetTicks();
+      currentTranceDirection = m->GetNextState();
+    }
+    
+    switch (currentTranceDirection) {
+      case 0:
+        rad = M_PI;
+        break;
+      case 1:
+        rad = -M_PI;
+        break;
+      case 2:
+        rad = 2 * M_PI;
+        break;
+      case 3:
+        rad = M_PI_2;
+        break;
+      default:
+        break;
+    }
+  } else {
+    
+    // Update |p| to new position
+    rad = atan2((mouseY - p.y), (mouseX - p.x));
   }
   
   oldMouseY = mouseY;
   oldMouseX = mouseX;
   
-  // Update |p| to new position
-  rad = atan2((mouseY - p.y), (mouseX - p.x));
+  // Bounds
+  if(p.x < 0) { rad = 2 * M_PI; }
+  if((p.x + SPRITE_WIDTH) > SCREEN_WIDTH) { rad = M_PI; }
+  
+  if(p.y < 0) { rad = M_PI_2; }
+  if((p.y + SPRITE_WIDTH) > SCREEN_HEIGHT) { rad = -M_PI_2; }
+  
   xDelta += cos(rad);
   yDelta += sin(rad);
   
@@ -111,14 +158,6 @@ void Robit::doEvent()
     p.y += (int)yDelta;
     yDelta = 0;
   }
-  
-  // Bounds
-  if(p.x < 0) { rad = 2 * M_PI; }
-  if((p.x + SPRITE_WIDTH) > SCREEN_WIDTH) { rad = M_PI; }
-  
-  if(p.y < 0) { rad = M_PI_2; }
-  if((p.y + SPRITE_WIDTH) > SCREEN_HEIGHT) { rad = -M_PI_2; }
-  
   
   // Animate at some fixed framerate
   int frameToDraw = ((SDL_GetTicks() - _startTime) * _animationRate / 1000) % SPRITE_ANIMATION_LEN;
@@ -177,16 +216,17 @@ int main(int argc, const char * argv[]) {
   //Initialize renderer color
   SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0xFF );
   
-
+  
   // TODO: background texture
   //    SDL_Texture* gTexture = SDL_CreateTextureFromSurface( gRenderer, gTextureImage );
-
+  
   
   bool quit = false;
   
   // event handler
   SDL_Event e;
   
+  m = new Markov();
   Robit* r1 = new Robit();
   Robit* r2 = new Robit();
   r2->p = {0, 100};
@@ -211,7 +251,7 @@ int main(int argc, const char * argv[]) {
     SDL_RenderClear( _renderer );
     
     r1->doEvent();
-//    r2->doEvent();
+    //    r2->doEvent();
     
     SDL_RenderPresent( _renderer );
     
