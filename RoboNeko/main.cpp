@@ -8,163 +8,21 @@
 
 #include <iostream>
 
-#include <math.h>
+#include "Robit.hpp"
 
-#include <SDL2_ttf/SDL_ttf.h>
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2/SDL_timer.h>
-
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-TTF_Font *_font = 0;
+//TTF_Font *_font = 0;
 SDL_Window* _window = 0;
 SDL_Surface* _screenSurface = 0;
 SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
 
-int _startTime = SDL_GetTicks();
-int _lastTransition = SDL_GetTicks();
 int mouseX = 0;
 int mouseY = 0;
 int oldMouseX = 0;
 int oldMouseY = 0;
 int currentTranceDirection = 0;
 
-class Markov
-{
-public:
-  int GetNextState();
-private:
-};
-
-int Markov::GetNextState()
-{
-  int next = arc4random_uniform(4);
-  printf("next: %d\n", next);
-  return next;
-}
-
 Markov* m;
-
-class Robit
-{
-public:
-  static const int SPRITE_WIDTH = 32;
-  static const int SPRITE_ANIMATION_LEN = 3;
-  Robit();
-  void doEvent();
-  void stop();
-  SDL_Point p = {0, 200};
-private:
-  double rad = M_PI_2;
-  double xDelta = 0;
-  double yDelta = 0;
-  SDL_Rect spriteClips[3];
-  int _animationRate = 12;
-  SDL_Texture* gRobitsTexture;
-};
-
-Robit::Robit()
-{
-  // Load the robit
-  SDL_Surface* gRobits = IMG_Load( "robits.png" );
-  //  SDL_Surface* gTextureImage = IMG_Load( "tex.png" );
-  
-  if(gRobits == 0) // || gTextureImage == 0)
-  {
-    printf( "Failed to load images! SDL_Error: %s\n", SDL_GetError() );
-  }
-  
-  // Setup Robit animation
-  spriteClips[0].x = 0;
-  spriteClips[0].y = 0;
-  spriteClips[0].w = 32;
-  spriteClips[0].h = 32;
-  
-  spriteClips[1].x = 32;
-  spriteClips[1].y = 0;
-  spriteClips[1].w = 32;
-  spriteClips[1].h = 32;
-  
-  spriteClips[2].x = 64;
-  spriteClips[2].y = 0;
-  spriteClips[2].w = 32;
-  spriteClips[2].h = 32;
-  
-  gRobitsTexture = SDL_CreateTextureFromSurface( _renderer, gRobits );
-  SDL_SetTextureColorMod( gRobitsTexture, 255, 25, 25 );
-}
-
-void Robit::stop()
-{
-  SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-  SDL_RenderCopy( _renderer, gRobitsTexture, &spriteClips[1], &robitLoc );
-}
-
-void Robit::doEvent()
-{
-  
-  if(oldMouseX == mouseX && oldMouseY == mouseY) {
-    //    stop();
-    if((SDL_GetTicks() > (_lastTransition + 1000))){
-      // Get a new direction
-      _lastTransition = SDL_GetTicks();
-      currentTranceDirection = m->GetNextState();
-    }
-    
-    switch (currentTranceDirection) {
-      case 0:
-        rad = M_PI;
-        break;
-      case 1:
-        rad = -M_PI;
-        break;
-      case 2:
-        rad = 2 * M_PI;
-        break;
-      case 3:
-        rad = M_PI_2;
-        break;
-      default:
-        break;
-    }
-  } else {
-    
-    // Update |p| to new position
-    rad = atan2((mouseY - p.y), (mouseX - p.x));
-  }
-  
-  oldMouseY = mouseY;
-  oldMouseX = mouseX;
-  
-  // Bounds
-  if(p.x < 0) { rad = 2 * M_PI; }
-  if((p.x + SPRITE_WIDTH) > SCREEN_WIDTH) { rad = M_PI; }
-  
-  if(p.y < 0) { rad = M_PI_2; }
-  if((p.y + SPRITE_WIDTH) > SCREEN_HEIGHT) { rad = -M_PI_2; }
-  
-  xDelta += cos(rad);
-  yDelta += sin(rad);
-  
-  if(xDelta > 1 || xDelta < -1){
-    p.x += (int)xDelta;
-    xDelta = 0;
-  }
-  
-  if(yDelta > 1 || yDelta < -1){
-    p.y += (int)yDelta;
-    yDelta = 0;
-  }
-  
-  // Animate at some fixed framerate
-  int frameToDraw = ((SDL_GetTicks() - _startTime) * _animationRate / 1000) % SPRITE_ANIMATION_LEN;
-  SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-  SDL_RenderCopy( _renderer, gRobitsTexture, &spriteClips[frameToDraw], &robitLoc );
-}
-
 
 SDL_Surface *load_image(std::string filename)
 {
@@ -227,8 +85,8 @@ int main(int argc, const char * argv[]) {
   SDL_Event e;
   
   m = new Markov();
-  Robit* r1 = new Robit();
-  Robit* r2 = new Robit();
+  Robit* r1 = new Robit(_renderer);
+  Robit* r2 = new Robit(_renderer);
   r2->p = {0, 100};
   
   // Main event loop
@@ -250,7 +108,7 @@ int main(int argc, const char * argv[]) {
     SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear( _renderer );
     
-    r1->doEvent();
+    r1->doEvent(mouseX, mouseY);
     //    r2->doEvent();
     
     SDL_RenderPresent( _renderer );
