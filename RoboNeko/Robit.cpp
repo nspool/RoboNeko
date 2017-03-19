@@ -10,13 +10,13 @@
 
 Robit::Robit(SDL_Renderer* _renderer)
 {
+
   renderer = _renderer;
   
   // Load the robit
   SDL_Surface* gRobits = IMG_Load( "robits.png" );
-  //  SDL_Surface* gTextureImage = IMG_Load( "tex.png" );
   
-  if(gRobits == 0) // || gTextureImage == 0)
+  if(gRobits == 0)
   {
     printf( "Failed to load images! SDL_Error: %s\n", SDL_GetError() );
   }
@@ -37,23 +37,25 @@ Robit::Robit(SDL_Renderer* _renderer)
   spriteClips[2].w = 32;
   spriteClips[2].h = 32;
   
-  gRobitsTexture = SDL_CreateTextureFromSurface( renderer, gRobits );
-  SDL_SetTextureColorMod( gRobitsTexture, 255, 25, 25 );
+  mTexture = SDL_CreateTextureFromSurface( renderer, gRobits );
+  SDL_SetTextureColorMod( mTexture, 255, 25, 25 );
 }
 
 void Robit::stop()
 {
   SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-  SDL_RenderCopy( renderer, gRobitsTexture, &spriteClips[1], &robitLoc );
+  SDL_RenderCopy( renderer, mTexture, &spriteClips[1], &robitLoc );
 }
 
 void Robit::doEvent(int mouseX, int mouseY)
 {
   
-  if(oldMouseX == mouseX && oldMouseY == mouseY) {
-    //    stop();
+  constexpr int width = 32;
+  constexpr int animationLen = 3;
+  
+  if(mLastMouseX == mouseX && mLastMouseY == mouseY) {
+
     if((SDL_GetTicks() > (_lastTransition + 1000))){
-      // Get a new direction
       _lastTransition = SDL_GetTicks();
       currentTranceDirection = m->GetNextState();
     }
@@ -76,21 +78,19 @@ void Robit::doEvent(int mouseX, int mouseY)
         return;
         break;
     }
-  } else {
-    
-    // Update |p| to new position
+  } else {    
     rad = atan2((mouseY - p.y), (mouseX - p.x));
   }
   
-  oldMouseY = mouseY;
-  oldMouseX = mouseX;
+  mLastMouseY = mouseY;
+  mLastMouseX = mouseX;
   
   // Bounds
   if(p.x < 0) { rad = 2 * M_PI; }
-  if((p.x + SPRITE_WIDTH) > SCREEN_WIDTH) { rad = M_PI; }
+  if((p.x + width) > SCREEN_WIDTH) { rad = M_PI; }
   
   if(p.y < 0) { rad = M_PI_2; }
-  if((p.y + SPRITE_WIDTH) > SCREEN_HEIGHT) { rad = -M_PI_2; }
+  if((p.y + width) > SCREEN_HEIGHT) { rad = -M_PI_2; }
   
   xDelta += cos(rad);
   yDelta += sin(rad);
@@ -106,7 +106,8 @@ void Robit::doEvent(int mouseX, int mouseY)
   }
   
   // Animate at some fixed framerate
-  int frameToDraw = ((SDL_GetTicks() - _startTime) * _animationRate / 1000) % SPRITE_ANIMATION_LEN;
+  constexpr int animationRate = 12;
+  int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
   SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-  SDL_RenderCopy( renderer, gRobitsTexture, &spriteClips[frameToDraw], &robitLoc );
+  SDL_RenderCopy( renderer, mTexture, &spriteClips[frameToDraw], &robitLoc );
 }

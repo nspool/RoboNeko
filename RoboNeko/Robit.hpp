@@ -16,32 +16,30 @@
 
 #include "Markov.hpp"
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+constexpr int SCREEN_WIDTH = 640;
+constexpr int SCREEN_HEIGHT = 480;
 
 #endif /* Robit_hpp */
 
 class Robit
 {
 public:
-  static const int SPRITE_WIDTH = 32;
-  static const int SPRITE_ANIMATION_LEN = 3;
   Robit(SDL_Renderer* _renderer);
   void doEvent(int mouseX, int mouseY);
   void stop();
   SDL_Point p = {0, 200};
 private:
+  
   int currentTranceDirection = 0;
-  int _lastTransition = SDL_GetTicks();
-  int _startTime = SDL_GetTicks();
+  int _lastTransition;
+  int _startTime;
   double rad = M_PI_2;
   double xDelta = 0;
   double yDelta = 0;
-  int oldMouseX = 0;
-  int oldMouseY = 0;
+  int mLastMouseX = 0;
+  int mLastMouseY = 0;
   SDL_Renderer* renderer = 0;
   SDL_Rect spriteClips[3];
-  int _animationRate = 12;
-  SDL_Texture* gRobitsTexture;
+  SDL_Texture* mTexture;
   Markov* m;
 };
