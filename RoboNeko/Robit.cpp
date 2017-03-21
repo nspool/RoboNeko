@@ -73,6 +73,9 @@ void Robit::doEvent(int mouseX, int mouseY)
       case 3:
         rad = M_PI_2;
         break;
+      case 4:
+        rad = -M_PI_2;
+        break;
       default:
         stop();
         return;
@@ -86,11 +89,11 @@ void Robit::doEvent(int mouseX, int mouseY)
   mLastMouseX = mouseX;
   
   // Bounds
-  if(p.x < 0) { rad = 2 * M_PI; }
-  if((p.x + width) > SCREEN_WIDTH) { rad = M_PI; }
+  if(p.x < 0) { currentTranceDirection = 2; rad = 2 * M_PI; }
+  if((p.x + width) > SCREEN_WIDTH) { currentTranceDirection = 0; rad = M_PI; }
   
-  if(p.y < 0) { rad = M_PI_2; }
-  if((p.y + width) > SCREEN_HEIGHT) { rad = -M_PI_2; }
+  if(p.y < 0) { currentTranceDirection = 3; rad = M_PI_2; }
+  if((p.y + width) > SCREEN_HEIGHT) { currentTranceDirection = 4; rad = -M_PI_2; }
   
   xDelta += cos(rad);
   yDelta += sin(rad);
