@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		730A16EC1E8A7176003D7DBD /* robits.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 730A16EB1E8A715E003D7DBD /* robits.png */; };
 		73373CA21E7A8D8400E53F1C /* Robit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA01E7A8D8400E53F1C /* Robit.cpp */; };
 		73373CA51E7A8DDD00E53F1C /* Markov.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA31E7A8DDD00E53F1C /* Markov.cpp */; };
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
@@ -17,16 +18,18 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		735C24881E6FFFDB00D37174 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = .;
+			dstSubfolderSpec = 16;
 			files = (
+				730A16EC1E8A7176003D7DBD /* robits.png in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		730A16EB1E8A715E003D7DBD /* robits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robits.png; sourceTree = "<group>"; };
 		73373CA01E7A8D8400E53F1C /* Robit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robit.cpp; sourceTree = "<group>"; };
 		73373CA11E7A8D8400E53F1C /* Robit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Robit.hpp; sourceTree = "<group>"; };
 		73373CA31E7A8DDD00E53F1C /* Markov.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Markov.cpp; sourceTree = "<group>"; };
@@ -73,6 +76,7 @@
 		735C248C1E6FFFDB00D37174 /* RoboNeko */ = {
 			isa = PBXGroup;
 			children = (
+				730A16EB1E8A715E003D7DBD /* robits.png */,
 				735C248D1E6FFFDB00D37174 /* main.cpp */,
 				73373CA01E7A8D8400E53F1C /* Robit.cpp */,
 				73373CA11E7A8D8400E53F1C /* Robit.hpp */,
