@@ -8,10 +8,10 @@
 
 #include "Robit.hpp"
 
-Robit::Robit(SDL_Renderer* _renderer)
+Robit::Robit(SDL_Renderer* renderer)
 {
-
-  renderer = _renderer;
+  
+  _renderer = renderer;
   
   // Load the robit
   SDL_Surface* gRobits = IMG_Load( "robits.png" );
@@ -38,13 +38,12 @@ Robit::Robit(SDL_Renderer* _renderer)
   spriteClips[2].h = 32;
   
   mTexture = SDL_CreateTextureFromSurface( renderer, gRobits );
-  SDL_SetTextureColorMod( mTexture, 255, 25, 25 );
 }
 
 void Robit::stop()
 {
   SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-  SDL_RenderCopy( renderer, mTexture, &spriteClips[1], &robitLoc );
+  SDL_RenderCopy( _renderer, mTexture, &spriteClips[1], &robitLoc );
 }
 
 void Robit::doEvent(int mouseX, int mouseY)
@@ -112,5 +111,5 @@ void Robit::doEvent(int mouseX, int mouseY)
   constexpr int animationRate = 12;
   int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
   SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-  SDL_RenderCopy( renderer, mTexture, &spriteClips[frameToDraw], &robitLoc );
+  SDL_RenderCopy( _renderer, mTexture, &spriteClips[frameToDraw], &robitLoc );
 }

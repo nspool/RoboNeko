@@ -1,8 +1,8 @@
 # RoboNeko
-Project for learning SDL2. 
+Project for learning SDL2, modelled after the classic Neko applet for OS/2.
 
 # TODO
 
-- Refactor and add a scene class
-- Implement collision detection with the window edge and other bots
+- Implement collision detection with other bots
+- Add different states such as collision, sleeping etc.
 

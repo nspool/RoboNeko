@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "Robit.hpp"
+#include "Scene.hpp"
 
 SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
@@ -71,11 +71,17 @@ int main(int argc, const char * argv[]) {
   // event handler
   SDL_Event e;
   
-  Robit* r1 = new Robit(_renderer);
-  Robit* r2 = new Robit(_renderer);
+  Robit* robit1 = new Robit(_renderer);
+  Robit* robit2 = new Robit(_renderer);
+
+  Scene* scene = new Scene(_renderer);
   
   // Starting position
-  r2->p = {0, 100};
+  robit1->p = {0, 100};
+  scene->Add(robit1);
+  
+  robit2->p = {500, 500};
+  scene->Add(robit2);
   
   // Main event loop
   
@@ -96,9 +102,8 @@ int main(int argc, const char * argv[]) {
     SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear( _renderer );
     
-    r1->doEvent(mouseX, mouseY);
-    //    r2->doEvent();
-    
+    scene->doEvent(mouseX, mouseY);
+
     SDL_RenderPresent( _renderer );
     
   } while(!quit);

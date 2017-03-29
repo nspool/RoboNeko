@@ -13,6 +13,7 @@
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
 		735C24961E70000E00D37174 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C24951E70000E00D37174 /* SDL2.framework */; };
 		735C24981E70011F00D37174 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C24971E70011F00D37174 /* SDL2_image.framework */; };
+		739E72361E8BB23B006F704E /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 739E72341E8BB23B006F704E /* Scene.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,6 +39,8 @@
 		735C248D1E6FFFDB00D37174 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		735C24951E70000E00D37174 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		735C24971E70011F00D37174 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
+		739E72341E8BB23B006F704E /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		739E72351E8BB23B006F704E /* Scene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +85,8 @@
 				73373CA11E7A8D8400E53F1C /* Robit.hpp */,
 				73373CA31E7A8DDD00E53F1C /* Markov.cpp */,
 				73373CA41E7A8DDD00E53F1C /* Markov.hpp */,
+				739E72341E8BB23B006F704E /* Scene.cpp */,
+				739E72351E8BB23B006F704E /* Scene.hpp */,
 			);
 			path = RoboNeko;
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				739E72361E8BB23B006F704E /* Scene.cpp in Sources */,
 				73373CA21E7A8D8400E53F1C /* Robit.cpp in Sources */,
 				735C248E1E6FFFDB00D37174 /* main.cpp in Sources */,
 				73373CA51E7A8DDD00E53F1C /* Markov.cpp in Sources */,

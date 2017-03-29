@@ -9,7 +9,6 @@
 #ifndef Robit_hpp
 #define Robit_hpp
 
-//#include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2/SDL_timer.h>
@@ -29,7 +28,6 @@ public:
   void stop();
   SDL_Point p = {0, 200};
 private:
-  
   int currentTranceDirection = 0;
   int _lastTransition;
   int _startTime;
@@ -38,7 +36,7 @@ private:
   double yDelta = 0;
   int mLastMouseX = 0;
   int mLastMouseY = 0;
-  SDL_Renderer* renderer = 0;
+  SDL_Renderer* _renderer = 0;
   SDL_Rect spriteClips[3];
   SDL_Texture* mTexture;
   Markov* m;
