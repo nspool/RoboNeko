@@ -46,6 +46,12 @@ void Robit::stop()
   SDL_RenderCopy( _renderer, mTexture, &spriteClips[1], &robitLoc );
 }
 
+void Robit::doCollision()
+{
+  // Just choose a new direction for now
+  currentTranceDirection = m->GetNextState();
+}
+
 void Robit::doEvent(int mouseX, int mouseY)
 {
   

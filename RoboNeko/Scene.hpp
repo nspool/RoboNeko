@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <SDL2/SDL.h>
 
 #endif /* Scene_hpp */
 

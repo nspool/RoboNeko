@@ -26,6 +26,7 @@ public:
   Robit(SDL_Renderer* _renderer);
   void doEvent(int mouseX, int mouseY);
   void stop();
+  void doCollision();
   SDL_Point p = {0, 200};
 private:
   int currentTranceDirection = 0;
