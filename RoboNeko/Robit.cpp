@@ -48,8 +48,9 @@ void Robit::stop()
 
 void Robit::doCollision()
 {
-  // Just choose a new direction for now
-  currentTranceDirection = m->GetNextState();
+  // Just stop for now
+  _lastTransition -= 1000;
+  stop();
 }
 
 void Robit::doEvent(int mouseX, int mouseY)
