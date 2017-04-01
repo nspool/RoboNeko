@@ -53,6 +53,7 @@ void Robit::doCollision()
   stop();
 }
 
+// Should return: next state
 void Robit::doEvent(int mouseX, int mouseY)
 {
   
