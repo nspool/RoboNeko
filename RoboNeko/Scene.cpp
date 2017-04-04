@@ -11,6 +11,7 @@
 Scene::Scene(SDL_Renderer* renderer)
 {
   _renderer = renderer;
+  block = new Block(renderer);
 }
 
 void Scene::Add(Robit *robit)
@@ -43,6 +44,7 @@ void Scene::doEvent(int mouseX, int mouseY)
       r->doEvent(mouseX, mouseY);
     }
   }
+  block->doEvent(mouseX, mouseY);
   Render();
 }
 

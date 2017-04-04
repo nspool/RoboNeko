@@ -11,6 +11,7 @@
 		73373CA21E7A8D8400E53F1C /* Robit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA01E7A8D8400E53F1C /* Robit.cpp */; };
 		73373CA51E7A8DDD00E53F1C /* Markov.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA31E7A8DDD00E53F1C /* Markov.cpp */; };
 		734D18521E8F60540002C626 /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 734D18501E8F60540002C626 /* Block.cpp */; };
+		7354C0981E93A2F400ECE705 /* block.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7354C0971E93A2D400ECE705 /* block.png */; };
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
 		735C24961E70000E00D37174 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C24951E70000E00D37174 /* SDL2.framework */; };
 		735C24981E70011F00D37174 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C24971E70011F00D37174 /* SDL2_image.framework */; };
@@ -24,6 +25,7 @@
 			dstPath = .;
 			dstSubfolderSpec = 16;
 			files = (
+				7354C0981E93A2F400ECE705 /* block.png in CopyFiles */,
 				730A16EC1E8A7176003D7DBD /* robits.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,6 +40,7 @@
 		73373CA41E7A8DDD00E53F1C /* Markov.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Markov.hpp; sourceTree = "<group>"; };
 		734D18501E8F60540002C626 /* Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Block.cpp; sourceTree = "<group>"; };
 		734D18511E8F60540002C626 /* Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
+		7354C0971E93A2D400ECE705 /* block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block.png; sourceTree = "<group>"; };
 		735C248A1E6FFFDB00D37174 /* RoboNeko */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RoboNeko; sourceTree = BUILT_PRODUCTS_DIR; };
 		735C248D1E6FFFDB00D37174 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		735C24951E70000E00D37174 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 		734D18551E8F61DE0002C626 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				7354C0971E93A2D400ECE705 /* block.png */,
 				730A16EB1E8A715E003D7DBD /* robits.png */,
 			);
 			name = Assets;

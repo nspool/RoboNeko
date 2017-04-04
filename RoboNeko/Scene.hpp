@@ -15,7 +15,9 @@
 
 #endif /* Scene_hpp */
 
+
 #include "Robit.hpp"
+#include "Block.hpp"
 
 class Scene
 {
@@ -27,4 +29,5 @@ public:
 private:
   SDL_Renderer* _renderer;
   std::vector<Robit*> _robits;
+  Block* block;
 };
