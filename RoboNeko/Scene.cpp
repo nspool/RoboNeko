@@ -29,9 +29,12 @@ void Scene::doEvent(int mouseX, int mouseY)
   // Just assume 2 robits for now
   auto p = _robits.at(0)->p;
   auto q = _robits.at(1)->p;
+  auto b = block->p;
   SDL_Rect robitFirstRect = { p.x, p.y, 32, 32 };
   SDL_Rect robitSecondRect = { q.x, q.y, 32, 32 };
+  SDL_Rect blockRect = { b.x, b.y, 32, 32 };
   bool isColliding = false;
+
   if(SDL_HasIntersection(&robitFirstRect, &robitSecondRect)) {
     isColliding = true;
   }
@@ -42,6 +45,12 @@ void Scene::doEvent(int mouseX, int mouseY)
       r->doCollision();
     } else {
       r->doEvent(mouseX, mouseY);
+    }
+    
+    SDL_Rect rect = { r->p.x, r->p.y, 32, 32 };
+    if(SDL_HasIntersection(&rect, &blockRect)) {
+      printf("doing block collision");
+      r->doCollision();
     }
   }
   block->doEvent(mouseX, mouseY);

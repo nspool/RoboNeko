@@ -48,9 +48,8 @@ void Robit::stop()
 
 void Robit::doCollision()
 {
-  // Just stop for now
-  _lastTransition -= 1000;
-  stop();
+  // Just try a different direction
+  currentTranceDirection = m->GetNextState();
 }
 
 // Should return: next state
