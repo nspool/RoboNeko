@@ -24,7 +24,8 @@ class Robit
 {
 public:
   Robit(SDL_Renderer* _renderer);
-  void doEvent(int mouseX, int mouseY);
+  void setGoal(SDL_Point* p);
+  void render();
   void stop();
   void doCollision();
   SDL_Point p = {0, 200};

@@ -101,8 +101,8 @@ int main(int argc, const char * argv[]) {
     // Clear window
     SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear( _renderer );
-    
-    scene->doEvent(mouseX, mouseY);
+    SDL_Point mountPoint = {mouseX, mouseY};
+    scene->doEvent(&mountPoint);
 
     SDL_RenderPresent( _renderer );
     

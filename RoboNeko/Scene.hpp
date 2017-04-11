@@ -25,7 +25,7 @@ public:
   Scene(SDL_Renderer* _renderer);
   void Add(Robit* robit);
   void Render();
-  void doEvent(int mouseX, int mouseY);
+  void doEvent(SDL_Point* p);
 private:
   SDL_Renderer* _renderer;
   std::vector<Robit*> _robits;

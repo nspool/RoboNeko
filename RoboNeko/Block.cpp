@@ -29,7 +29,7 @@ Block::Block(SDL_Renderer* renderer)
   mTexture = SDL_CreateTextureFromSurface( renderer, gRobits );
 }
 
-void Block::doEvent(int mouseX, int mouseY)
+void Block::render()
 {
   SDL_Rect blockLoc = { p.x, p.y, 32, 32 };
   SDL_RenderCopy( _renderer, mTexture, &spriteClips[0], &blockLoc );

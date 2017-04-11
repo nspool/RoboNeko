@@ -19,45 +19,17 @@ void Scene::Add(Robit *robit)
   _robits.push_back(robit);
 }
 
-void Scene::doEvent(int mouseX, int mouseY)
+void Scene::doEvent(SDL_Point *p)
 {
   
-  // should really have a set of current positions allow each item
-  // To determine its own next position, then given back to this class
-  // Which will render it.
-  
-  // Just assume 2 robits for now
-  auto p = _robits.at(0)->p;
-  auto q = _robits.at(1)->p;
-  auto b = block->p;
-  SDL_Rect robitFirstRect = { p.x, p.y, 32, 32 };
-  SDL_Rect robitSecondRect = { q.x, q.y, 32, 32 };
-  SDL_Rect blockRect = { b.x, b.y, 32, 32 };
-  bool isColliding = false;
-
-  if(SDL_HasIntersection(&robitFirstRect, &robitSecondRect)) {
-    isColliding = true;
-  }
-  
+  // Set the same goal for each of the robits
   for(auto& r : _robits) { // the & suffix means "reference to"
-    if(isColliding == true) {
-      isColliding = false;
-      r->doCollision();
-    } else {
-      r->doEvent(mouseX, mouseY);
-    }
-    
-    SDL_Rect rect = { r->p.x, r->p.y, 32, 32 };
-    if(SDL_HasIntersection(&rect, &blockRect)) {
-      printf("doing block collision");
-      r->doCollision();
-    }
+    r->setGoal(p);
   }
-  block->doEvent(mouseX, mouseY);
-  Render();
-}
-
-void Scene::Render()
-{
   
+  for(auto& r : _robits) {
+    r->render();
+  }
+  
+  block->render();
 }

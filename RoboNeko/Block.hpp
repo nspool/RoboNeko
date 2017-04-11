@@ -19,7 +19,7 @@ class Block
 {
 public:
   Block(SDL_Renderer* _renderer);
-  void doEvent(int mouseX, int mouseY);
+  void render();
   void stop();
   void doCollision();
   SDL_Point p = {150, 150};
