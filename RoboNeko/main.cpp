@@ -6,6 +6,9 @@
 //  Copyright © 2017 nspool. All rights reserved.
 //
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 #include <iostream>
 
 #include "Scene.hpp"
