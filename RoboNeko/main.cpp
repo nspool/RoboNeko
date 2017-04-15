@@ -16,6 +16,7 @@
 SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
 
+bool isMobile = false;
 int mouseX = 0;
 int mouseY = 0;
 int oldMouseX = 0;
@@ -34,6 +35,27 @@ SDL_Surface *load_image(std::string filename)
   return optimisedImage;
 }
 
+int
+event_filter(void* userdata, SDL_Event* event)
+{
+  if(isMobile == 1) {
+    switch(event->type) {
+      case SDL_MOUSEBUTTONDOWN:
+      case SDL_MOUSEMOTION:
+      case SDL_MOUSEBUTTONUP:
+        return 0;
+    }
+  } else {
+    switch(event->type) {
+      case SDL_FINGERDOWN:
+      case SDL_FINGERMOTION:
+      case SDL_FINGERUP:
+        return 0;
+    }
+  }
+  return 1;
+}
+
 int main(int argc, const char * argv[]) {
   
   if(SDL_Init(SDL_INIT_EVERYTHING) < 0 )
@@ -47,6 +69,13 @@ int main(int argc, const char * argv[]) {
     std::cout << "Failed to initialise SDL_image!" << std::endl;
     return 1;
   }
+  
+  // Check platform
+  const char* platform = SDL_GetPlatform();
+  if(platform[0] == 'i' || platform[0] == 'A') {
+    isMobile = 1;
+  }
+  SDL_SetEventFilter(event_filter, NULL);
   
   //Create window
   SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
@@ -92,15 +121,32 @@ int main(int argc, const char * argv[]) {
     while(SDL_PollEvent(&e) != 0)
     {
       switch (e.type) {
+        case SDL_FINGERDOWN:
+          printf("finger down\n");
+          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
+          break;
+        case SDL_FINGERMOTION:
+          printf("finger motion\n");
+          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
+          break;
+        case SDL_FINGERUP:
+          printf("finger up\n");
+          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
+          break;
+        case SDL_MOUSEBUTTONDOWN:
+          printf("mouse down\n");
+          break;
+        case SDL_MOUSEMOTION:
+          printf("mouse motion\n");
+          break;
+        case SDL_MOUSEBUTTONUP:
+          printf("mouse up\n");
+          break;
         case SDL_QUIT:
           quit = true;
-        case SDL_MOUSEMOTION:
-          SDL_GetMouseState( &mouseX, &mouseY );
-        default:
-          break;
       }
     }
-    
+  
     // Clear window
     SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear( _renderer );
