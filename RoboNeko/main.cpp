@@ -137,6 +137,8 @@ int main(int argc, const char * argv[]) {
           printf("mouse down\n");
           break;
         case SDL_MOUSEMOTION:
+          mouseX = e.motion.x;
+          mouseY = e.motion.y;
           printf("mouse motion\n");
           break;
         case SDL_MOUSEBUTTONUP:
