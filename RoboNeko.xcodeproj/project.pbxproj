@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		730A16EC1E8A7176003D7DBD /* robits.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 730A16EB1E8A715E003D7DBD /* robits.png */; };
 		73373CA21E7A8D8400E53F1C /* Robit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA01E7A8D8400E53F1C /* Robit.cpp */; };
-		73373CA51E7A8DDD00E53F1C /* Markov.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA31E7A8DDD00E53F1C /* Markov.cpp */; };
 		734D18521E8F60540002C626 /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 734D18501E8F60540002C626 /* Block.cpp */; };
 		7354C0981E93A2F400ECE705 /* block.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7354C0971E93A2D400ECE705 /* block.png */; };
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
@@ -36,10 +35,9 @@
 		730A16EB1E8A715E003D7DBD /* robits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robits.png; sourceTree = "<group>"; };
 		73373CA01E7A8D8400E53F1C /* Robit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robit.cpp; sourceTree = "<group>"; };
 		73373CA11E7A8D8400E53F1C /* Robit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Robit.hpp; sourceTree = "<group>"; };
-		73373CA31E7A8DDD00E53F1C /* Markov.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Markov.cpp; sourceTree = "<group>"; };
-		73373CA41E7A8DDD00E53F1C /* Markov.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Markov.hpp; sourceTree = "<group>"; };
 		734D18501E8F60540002C626 /* Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Block.cpp; sourceTree = "<group>"; };
 		734D18511E8F60540002C626 /* Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
+		734F6E4F1EAF44B6008AAF17 /* Sprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Sprite.hpp; sourceTree = "<group>"; };
 		7354C0971E93A2D400ECE705 /* block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block.png; sourceTree = "<group>"; };
 		735C248A1E6FFFDB00D37174 /* RoboNeko */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RoboNeko; sourceTree = BUILT_PRODUCTS_DIR; };
 		735C248D1E6FFFDB00D37174 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -71,17 +69,16 @@
 			name = Scene;
 			sourceTree = "<group>";
 		};
-		734D18541E8F615C0002C626 /* Actors */ = {
+		734D18541E8F615C0002C626 /* Sprites */ = {
 			isa = PBXGroup;
 			children = (
+				734F6E4F1EAF44B6008AAF17 /* Sprite.hpp */,
 				73373CA01E7A8D8400E53F1C /* Robit.cpp */,
 				73373CA11E7A8D8400E53F1C /* Robit.hpp */,
 				734D18501E8F60540002C626 /* Block.cpp */,
 				734D18511E8F60540002C626 /* Block.hpp */,
-				73373CA31E7A8DDD00E53F1C /* Markov.cpp */,
-				73373CA41E7A8DDD00E53F1C /* Markov.hpp */,
 			);
-			name = Actors;
+			name = Sprites;
 			sourceTree = "<group>";
 		};
 		734D18551E8F61DE0002C626 /* Assets */ = {
@@ -127,7 +124,7 @@
 				734D18551E8F61DE0002C626 /* Assets */,
 				734D18561E8F61E30002C626 /* Main */,
 				734D18531E8F61510002C626 /* Scene */,
-				734D18541E8F615C0002C626 /* Actors */,
+				734D18541E8F615C0002C626 /* Sprites */,
 			);
 			path = RoboNeko;
 			sourceTree = "<group>";
@@ -201,7 +198,6 @@
 				739E72361E8BB23B006F704E /* Scene.cpp in Sources */,
 				73373CA21E7A8D8400E53F1C /* Robit.cpp in Sources */,
 				735C248E1E6FFFDB00D37174 /* main.cpp in Sources */,
-				73373CA51E7A8DDD00E53F1C /* Markov.cpp in Sources */,
 				734D18521E8F60540002C626 /* Block.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

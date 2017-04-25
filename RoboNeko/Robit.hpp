@@ -13,21 +13,23 @@
 #include <SDL2_image/SDL_image.h>
 #include <SDL2/SDL_timer.h>
 
-#include "Markov.hpp"
+#include "Sprite.hpp"
 
 constexpr int SCREEN_WIDTH = 640;
 constexpr int SCREEN_HEIGHT = 480;
 
 #endif /* Robit_hpp */
 
-class Robit
+class Robit : Sprite
 {
 public:
   Robit(SDL_Renderer* _renderer);
   void setGoal(SDL_Point* p);
+
   void render();
   void stop();
   void doCollision();
+  
   SDL_Point p = {0, 200};
 private:
   int currentTranceDirection = 0;
@@ -41,5 +43,4 @@ private:
   SDL_Renderer* _renderer = 0;
   SDL_Rect spriteClips[3];
   SDL_Texture* mTexture;
-  Markov* m;
 };

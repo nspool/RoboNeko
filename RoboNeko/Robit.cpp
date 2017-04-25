@@ -49,7 +49,7 @@ void Robit::stop()
 void Robit::doCollision()
 {
   // Just try a different direction
-  currentTranceDirection = m->GetNextState();
+  currentTranceDirection = arc4random_uniform(5);
 }
 
 

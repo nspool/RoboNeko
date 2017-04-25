@@ -15,7 +15,6 @@
 
 #endif /* Scene_hpp */
 
-
 #include "Robit.hpp"
 #include "Block.hpp"
 

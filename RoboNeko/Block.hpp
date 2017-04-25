@@ -13,6 +13,8 @@
 #include <SDL2_image/SDL_image.h>
 #include <SDL2/SDL_timer.h>
 
+#include "Sprite.hpp"
+
 #endif /* Block_hpp */
 
 class Block
