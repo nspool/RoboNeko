@@ -8,9 +8,10 @@
 
 #include "Robit.hpp"
 
-Robit::Robit(SDL_Renderer* renderer)
+Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
 {
   
+  _p = p;
   _renderer = renderer;
   
   // Load the robit
@@ -22,60 +23,63 @@ Robit::Robit(SDL_Renderer* renderer)
   }
   
   // Setup Robit animation
-  spriteClips[0].x = 0;
-  spriteClips[0].y = 0;
-  spriteClips[0].w = 32;
-  spriteClips[0].h = 32;
+  _spriteClips[0].x = 0;
+  _spriteClips[0].y = 0;
+  _spriteClips[0].w = 32;
+  _spriteClips[0].h = 32;
   
-  spriteClips[1].x = 32;
-  spriteClips[1].y = 0;
-  spriteClips[1].w = 32;
-  spriteClips[1].h = 32;
+  _spriteClips[1].x = 32;
+  _spriteClips[1].y = 0;
+  _spriteClips[1].w = 32;
+  _spriteClips[1].h = 32;
   
-  spriteClips[2].x = 64;
-  spriteClips[2].y = 0;
-  spriteClips[2].w = 32;
-  spriteClips[2].h = 32;
+  _spriteClips[2].x = 64;
+  _spriteClips[2].y = 0;
+  _spriteClips[2].w = 32;
+  _spriteClips[2].h = 32;
   
-  mTexture = SDL_CreateTextureFromSurface( renderer, gRobits );
+  _texture = SDL_CreateTextureFromSurface( renderer, gRobits );
 }
 
 void Robit::stop()
 {
-  SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-  SDL_RenderCopy( _renderer, mTexture, &spriteClips[1], &robitLoc );
+  SDL_Rect robitLoc = { _p.x, _p.y, 32, 32 };
+  SDL_RenderCopy( _renderer, _texture, &_spriteClips[1], &robitLoc );
 }
 
 void Robit::doCollision()
 {
   // Just try a different direction
-  currentTranceDirection = arc4random_uniform(5);
+  _currentTranceDirection = arc4random_uniform(5);
 }
 
 
 void Robit::setGoal(SDL_Point* mouse)
 {
   // Interpolate the line between the current position and the goal
-  double rad = atan2((mouse->y - p.y), (mouse->x - p.x));
-  printf("%f\n", rad);
-  // Are there blocks in the way? If so, modify the angle to avoid.
-  // TODO:
+  double rad = atan2((mouse->y - _p.y), (mouse->x - _p.x));
   
-  
+  // TODO: Are there blocks in the way? If so, modify the angle to avoid.
+    
   // Set the new coordinates
   
-  xDelta += cos(rad);
-  yDelta += sin(rad);
+  _xDelta += cos(rad);
+  _yDelta += sin(rad);
   
-  if(xDelta > 1 || xDelta < -1){
-    p.x += (int)xDelta;
-    xDelta = 0;
+  if(_xDelta > 1 || _xDelta < -1){
+    _p.x += (int)_xDelta;
+    _xDelta = 0;
   }
   
-  if(yDelta > 1 || yDelta < -1){
-    p.y += (int)yDelta;
-    yDelta = 0;
+  if(_yDelta > 1 || _yDelta < -1){
+    _p.y += (int)_yDelta;
+    _yDelta = 0;
   }
+}
+
+SDL_Rect Robit::getBounds()
+{
+  return { _p.x, _p.y, 32, 32 };
 }
 
 void Robit::render()
@@ -84,73 +88,6 @@ void Robit::render()
   constexpr int animationRate = 12;
   constexpr int animationLen = 3;
   int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
-  SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-  SDL_RenderCopy( _renderer, mTexture, &spriteClips[frameToDraw], &robitLoc );
+  SDL_Rect bounds = getBounds();
+  SDL_RenderCopy( _renderer, _texture, &_spriteClips[frameToDraw], &bounds );
 }
-
-//void Robit::doEvent(int mouseX, int mouseY)
-//{
-//  constexpr int width = 32;
-//  constexpr int animationLen = 3;
-//
-//  if(mLastMouseX == mouseX && mLastMouseY == mouseY) {
-//
-//    if((SDL_GetTicks() > (_lastTransition + 1000))){
-//      _lastTransition = SDL_GetTicks();
-//      currentTranceDirection = m->GetNextState();
-//    }
-//
-//    switch (currentTranceDirection) {
-//      case 0:
-//        rad = M_PI;
-//        break;
-//      case 1:
-//        rad = -M_PI;
-//        break;
-//      case 2:
-//        rad = 2 * M_PI;
-//        break;
-//      case 3:
-//        rad = M_PI_2;
-//        break;
-//      case 4:
-//        rad = -M_PI_2;
-//        break;
-//      default:
-//        stop();
-//        return;
-//        break;
-//    }
-//  } else {
-//    rad = atan2((mouseY - p.y), (mouseX - p.x));
-//  }
-//
-//  mLastMouseY = mouseY;
-//  mLastMouseX = mouseX;
-//
-//  // Bounds
-//  if(p.x < 0) { currentTranceDirection = 2; rad = 2 * M_PI; }
-//  if((p.x + width) > SCREEN_WIDTH) { currentTranceDirection = 0; rad = M_PI; }
-//
-//  if(p.y < 0) { currentTranceDirection = 3; rad = M_PI_2; }
-//  if((p.y + width) > SCREEN_HEIGHT) { currentTranceDirection = 4; rad = -M_PI_2; }
-//
-//  xDelta += cos(rad);
-//  yDelta += sin(rad);
-//
-//  if(xDelta > 1 || xDelta < -1){
-//    p.x += (int)xDelta;
-//    xDelta = 0;
-//  }
-//
-//  if(yDelta > 1 || yDelta < -1){
-//    p.y += (int)yDelta;
-//    yDelta = 0;
-//  }
-//
-//  // Animate at some fixed framerate
-//  constexpr int animationRate = 12;
-//  int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
-//  SDL_Rect robitLoc = { p.x, p.y, 32, 32 };
-//  SDL_RenderCopy( _renderer, mTexture, &spriteClips[frameToDraw], &robitLoc );
-//}

@@ -12,6 +12,8 @@
 #include <iostream>
 
 #include "Scene.hpp"
+#include "Robit.hpp"
+#include "Block.hpp"
 
 SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
@@ -103,17 +105,15 @@ int main(int argc, const char * argv[]) {
   // event handler
   SDL_Event e;
   
-  Robit* robit1 = new Robit(_renderer);
-  Robit* robit2 = new Robit(_renderer);
-
   Scene* scene = new Scene(_renderer);
   
-  // Starting position
-  robit1->p = {0, 100};
+  Sprite* robit1 = new Robit(_renderer,{0, 100});
+  Sprite* robit2 = new Robit(_renderer, {500, 500});
+  Sprite* block = new Block(_renderer, {150, 150});
+
   scene->Add(robit1);
-  
-  robit2->p = {500, 500};
   scene->Add(robit2);
+  scene->Add(block);
   
   // Main event loop
   

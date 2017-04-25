@@ -17,15 +17,16 @@
 
 #endif /* Block_hpp */
 
-class Block
+class Block : public Sprite
 {
 public:
-  Block(SDL_Renderer* _renderer);
+  Block(SDL_Renderer* _renderer, SDL_Point p);
   void render();
   void stop();
   void doCollision();
-  SDL_Point p = {150, 150};
+  SDL_Rect getBounds();
 private:
+  SDL_Point _p = {150, 150};
   SDL_Renderer* _renderer = 0;
   SDL_Rect spriteClips[1];
   SDL_Texture* mTexture;

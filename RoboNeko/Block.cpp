@@ -8,8 +8,9 @@
 
 #include "Block.hpp"
 
-Block::Block(SDL_Renderer* renderer)
+Block::Block(SDL_Renderer* renderer, SDL_Point p)
 {
+  _p = p;
   _renderer = renderer;
   
   // Load the robit
@@ -31,12 +32,17 @@ Block::Block(SDL_Renderer* renderer)
 
 void Block::render()
 {
-  SDL_Rect blockLoc = { p.x, p.y, 32, 32 };
+  SDL_Rect blockLoc = getBounds();
   SDL_RenderCopy( _renderer, mTexture, &spriteClips[0], &blockLoc );
 }
 
 void Block::stop(){
   
+}
+
+SDL_Rect Block::getBounds()
+{
+  return { _p.x, _p.y, 32, 32 };
 }
 
 void Block::doCollision()

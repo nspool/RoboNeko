@@ -20,27 +20,28 @@ constexpr int SCREEN_HEIGHT = 480;
 
 #endif /* Robit_hpp */
 
-class Robit : Sprite
+class Robit : public Sprite
 {
 public:
-  Robit(SDL_Renderer* _renderer);
+  Robit(SDL_Renderer* _renderer, SDL_Point p);
   void setGoal(SDL_Point* p);
 
   void render();
   void stop();
   void doCollision();
+  SDL_Rect getBounds();
   
-  SDL_Point p = {0, 200};
 private:
-  int currentTranceDirection = 0;
+  int _currentTranceDirection = 0;
   int _lastTransition;
   int _startTime;
-  double rad = M_PI_2;
-  double xDelta = 0;
-  double yDelta = 0;
-  int mLastMouseX = 0;
-  int mLastMouseY = 0;
+  SDL_Point _p = {0, 200};
+  double _rad = M_PI_2;
+  double _xDelta = 0;
+  double _yDelta = 0;
+  int _lastMouseX = 0;
+  int _lastMouseY = 0;
   SDL_Renderer* _renderer = 0;
-  SDL_Rect spriteClips[3];
-  SDL_Texture* mTexture;
+  SDL_Rect _spriteClips[3];
+  SDL_Texture* _texture;
 };

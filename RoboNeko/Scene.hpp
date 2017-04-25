@@ -15,18 +15,16 @@
 
 #endif /* Scene_hpp */
 
-#include "Robit.hpp"
-#include "Block.hpp"
+#include "Sprite.hpp"
 
 class Scene
 {
 public:
   Scene(SDL_Renderer* _renderer);
-  void Add(Robit* robit);
+  void Add(Sprite* sprite);
   void Render();
   void doEvent(SDL_Point* p);
 private:
   SDL_Renderer* _renderer;
-  std::vector<Robit*> _robits;
-  Block* block;
+  std::vector<Sprite*> _sprites;
 };

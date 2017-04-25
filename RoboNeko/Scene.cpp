@@ -13,12 +13,11 @@
 Scene::Scene(SDL_Renderer* renderer)
 {
   _renderer = renderer;
-  block = new Block(renderer);
 }
 
-void Scene::Add(Robit *robit)
+void Scene::Add(Sprite *sprite)
 {
-  _robits.push_back(robit);
+  _sprites.push_back(sprite);
 }
 
 
@@ -31,13 +30,11 @@ void Scene::doEvent(SDL_Point *p)
   
   // Set the same goal for each of the robits
 
-  for(auto& r : _robits) { // the & suffix means "reference to"
+  for(auto& r : _sprites) { // the & suffix means "reference to"
     r->setGoal(p);
   }
   
-  for(auto& r : _robits) {
+  for(auto& r : _sprites) {
     r->render();
   }
-  
-  block->render();
 }
