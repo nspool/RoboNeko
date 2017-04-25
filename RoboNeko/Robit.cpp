@@ -25,25 +25,25 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
   // Setup Robit animation
   _spriteClips[0].x = 0;
   _spriteClips[0].y = 0;
-  _spriteClips[0].w = 32;
-  _spriteClips[0].h = 32;
+  _spriteClips[0].w = 21;
+  _spriteClips[0].h = 31;
   
-  _spriteClips[1].x = 32;
+  _spriteClips[1].x = 21;
   _spriteClips[1].y = 0;
-  _spriteClips[1].w = 32;
-  _spriteClips[1].h = 32;
+  _spriteClips[1].w = 21;
+  _spriteClips[1].h = 31;
   
-  _spriteClips[2].x = 64;
+  _spriteClips[2].x = 42;
   _spriteClips[2].y = 0;
-  _spriteClips[2].w = 32;
-  _spriteClips[2].h = 32;
+  _spriteClips[2].w = 21;
+  _spriteClips[2].h = 31;
   
   _texture = SDL_CreateTextureFromSurface( renderer, gRobits );
 }
 
 void Robit::stop()
 {
-  SDL_Rect robitLoc = { _p.x, _p.y, 32, 32 };
+  SDL_Rect robitLoc = { _p.x, _p.y, 21, 31 };
   SDL_RenderCopy( _renderer, _texture, &_spriteClips[1], &robitLoc );
 }
 
@@ -89,7 +89,7 @@ void Robit::setGoal(SDL_Point* mouse)
 
 SDL_Rect Robit::getBounds()
 {
-  return { _p.x, _p.y, 32, 32 };
+  return { _p.x, _p.y, 21, 31 };
 }
 
 void Robit::render()
