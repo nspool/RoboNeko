@@ -49,13 +49,23 @@ void Robit::stop()
 
 void Robit::doCollision()
 {
-  // Just try a different direction
-  _currentTranceDirection = arc4random_uniform(5);
+  // "revert" to the previous uncollided position
+  _p = _prev;
+  _isCollided = true;
 }
 
 
 void Robit::setGoal(SDL_Point* mouse)
 {
+  
+  if(_isCollided == true) {
+    _isCollided = false;
+    return;
+  }
+  
+  // Save the current position if the update position enters a collision sate
+  _prev = _p;
+  
   // Interpolate the line between the current position and the goal
   double rad = atan2((mouse->y - _p.y), (mouse->x - _p.x));
   

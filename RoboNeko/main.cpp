@@ -122,27 +122,24 @@ int main(int argc, const char * argv[]) {
     {
       switch (e.type) {
         case SDL_FINGERDOWN:
-          printf("finger down\n");
-          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
+//          printf("finger down\n");
+//          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
           break;
         case SDL_FINGERMOTION:
-          printf("finger motion\n");
-          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
+//          printf("finger motion\n");
+//          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
           break;
         case SDL_FINGERUP:
-          printf("finger up\n");
-          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
+//          printf("finger up\n");
+//          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
           break;
         case SDL_MOUSEBUTTONDOWN:
-          printf("mouse down\n");
           break;
         case SDL_MOUSEMOTION:
           mouseX = e.motion.x;
           mouseY = e.motion.y;
-          printf("mouse motion\n");
           break;
         case SDL_MOUSEBUTTONUP:
-          printf("mouse up\n");
           break;
         case SDL_QUIT:
           quit = true;

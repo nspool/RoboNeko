@@ -47,5 +47,5 @@ SDL_Rect Block::getBounds()
 
 void Block::doCollision()
 {
-
+  printf("Block collision\n");
 }

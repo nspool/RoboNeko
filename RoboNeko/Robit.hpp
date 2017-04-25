@@ -32,10 +32,11 @@ public:
   SDL_Rect getBounds();
   
 private:
-  int _currentTranceDirection = 0;
+  bool _isCollided = false;
   int _lastTransition;
   int _startTime;
   SDL_Point _p = {0, 200};
+  SDL_Point _prev = {0, 200};
   double _rad = M_PI_2;
   double _xDelta = 0;
   double _yDelta = 0;
