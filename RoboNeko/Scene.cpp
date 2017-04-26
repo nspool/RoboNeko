@@ -40,7 +40,7 @@ void Scene::doEvent(SDL_Point *p)
   // Set the same goal for each of the robits
   
   for(auto& r : _sprites) { // the & suffix means "reference to"
-    r->setGoal(p);
+    r->action(p, &_sprites);
   }
   
   for(auto& r : _sprites) {

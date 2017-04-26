@@ -55,7 +55,7 @@ void Robit::doCollision()
 }
 
 
-void Robit::setGoal(SDL_Point* mouse)
+void Robit::action(SDL_Point* mouse, std::vector<Sprite*> *scene)
 {
   
   if(_isCollided == true) {

@@ -9,6 +9,8 @@
 #ifndef Robit_hpp
 #define Robit_hpp
 
+#include <vector>
+
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2/SDL_timer.h>
@@ -24,13 +26,11 @@ class Robit : public Sprite
 {
 public:
   Robit(SDL_Renderer* _renderer, SDL_Point p);
-  void setGoal(SDL_Point* p);
-
+  SDL_Rect getBounds();
   void render();
   void stop();
   void doCollision();
-  SDL_Rect getBounds();
-  
+  void action(SDL_Point* mouse, std::vector<Sprite*> *scene);
 private:
   bool _isCollided = false;
   int _lastTransition;
