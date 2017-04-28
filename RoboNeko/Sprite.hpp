@@ -12,15 +12,13 @@
 #include <vector>
 #include <SDL2/SDL.h>
 
-#include "Scene.hpp"
-
 struct Sprite
 {
 public:
   virtual void render() {}
   virtual void stop() {}
   virtual void doCollision() {}
-  virtual void action(SDL_Point* mouse);
+  virtual void action(SDL_Point* mouse) {};
   virtual SDL_Rect getBounds() { return SDL_Rect(); }
 };
 

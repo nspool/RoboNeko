@@ -8,8 +8,6 @@
 
 #include "Scene.hpp"
 
-// TODO: scene graph data structure
-
 Scene::Scene(SDL_Renderer* renderer)
 {
   _renderer = renderer;
@@ -23,10 +21,10 @@ void Scene::Add(Sprite *sprite)
 void Scene::doEvent(SDL_Point *p)
 {
   
-  // Collision detection
+  // Quick & Dirty collision detection
   
-  for(auto& r : _sprites) { // the & suffix means "reference to"
-    for(auto& s : _sprites) { // the & suffix means "reference to"
+  for(auto& r : _sprites) {
+    for(auto& s : _sprites) {
       if(r == s) { continue; }
       SDL_Rect result = SDL_Rect();
       SDL_Rect r_rect = r->getBounds();
@@ -40,7 +38,7 @@ void Scene::doEvent(SDL_Point *p)
   // Set the same goal for each of the robits
   
   for(auto& r : _sprites) { // the & suffix means "reference to"
-    r->action(p, &_sprites);
+    r->action(p);
   }
   
   for(auto& r : _sprites) {

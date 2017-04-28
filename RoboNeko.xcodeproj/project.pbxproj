@@ -75,8 +75,8 @@
 				734F6E4F1EAF44B6008AAF17 /* Sprite.hpp */,
 				73373CA11E7A8D8400E53F1C /* Robit.hpp */,
 				73373CA01E7A8D8400E53F1C /* Robit.cpp */,
-				734D18501E8F60540002C626 /* Block.cpp */,
 				734D18511E8F60540002C626 /* Block.hpp */,
+				734D18501E8F60540002C626 /* Block.cpp */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
