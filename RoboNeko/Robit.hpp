@@ -30,7 +30,7 @@ public:
   void render();
   void stop();
   void doCollision();
-  void action(SDL_Point* mouse);
+  void action(SDL_Point* target, std::vector<SDL_Rect>* obsticles);
 private:
   bool _isCollided = false;
   int _lastTransition;

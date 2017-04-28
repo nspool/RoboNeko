@@ -20,10 +20,11 @@ void Scene::Add(Sprite *sprite)
 
 void Scene::doEvent(SDL_Point *p)
 {
+  std::vector<SDL_Rect> obsticles;
   
   // Quick & Dirty collision detection
-  
   for(auto& r : _sprites) {
+    obsticles.push_back(r->getBounds());
     for(auto& s : _sprites) {
       if(r == s) { continue; }
       SDL_Rect result = SDL_Rect();
@@ -35,12 +36,12 @@ void Scene::doEvent(SDL_Point *p)
     }
   }
   
-  // Set the same goal for each of the robits
-  
-  for(auto& r : _sprites) { // the & suffix means "reference to"
-    r->action(p);
+  // Update the sprite goals
+  for(auto& r : _sprites) {
+    r->action(p, &obsticles);
   }
   
+  // Render the next frame
   for(auto& r : _sprites) {
     r->render();
   }

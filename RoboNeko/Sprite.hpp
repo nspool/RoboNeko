@@ -18,7 +18,7 @@ public:
   virtual void render() {}
   virtual void stop() {}
   virtual void doCollision() {}
-  virtual void action(SDL_Point* mouse) {};
+  virtual void action(SDL_Point* target, std::vector<SDL_Rect>* obsticles) {};
   virtual SDL_Rect getBounds() { return SDL_Rect(); }
 };
 

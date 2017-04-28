@@ -55,7 +55,7 @@ void Robit::doCollision()
 }
 
 
-void Robit::action(SDL_Point* mouse)
+void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
 {
   
   if(_isCollided == true) {
@@ -63,16 +63,29 @@ void Robit::action(SDL_Point* mouse)
     return;
   }
   
+  bool willCollide = false;
+
+  for(SDL_Rect o: *obsticles) {
+    if(o.x == _p.x && o.y == _p.y) { continue; }
+    // Modify the angle randomly to attempt to avoid collision.
+    if(SDL_IntersectRectAndLine(&o, &_prev.x, &_prev.y, &target->x, &target->y)){
+      // rad = atan2((o.y - 10 - _p.y), (o.x - 10 - _p.x));
+      willCollide = true;
+      break;
+    }
+  }
+  
   // Save the current position if the update position enters a collision sate
   _prev = _p;
   
-  // Interpolate the line between the current position and the goal
-  double rad = atan2((mouse->y - _p.y), (mouse->x - _p.x));
+  // Interpolate the line between the current position and the target
+  double rad = atan2((target->y - _p.y), (target->x - _p.x));
   
-  // TODO: Are there blocks in the way? If so, modify the angle to avoid.
-    
+  if(willCollide) {
+    rad += (arc4random_uniform(6) - 3);
+  }
+  
   // Set the new coordinates
-  
   _xDelta += cos(rad);
   _yDelta += sin(rad);
   
