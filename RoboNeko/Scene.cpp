@@ -24,7 +24,11 @@ void Scene::doEvent(SDL_Point *p)
   
   // Quick & Dirty collision detection
   for(auto& r : _sprites) {
-    obsticles.push_back(r->getBounds());
+    
+    if(r->isObsticle()) {
+      obsticles.push_back(r->getBounds());
+    }
+    
     for(auto& s : _sprites) {
       if(r == s) { continue; }
       SDL_Rect result = SDL_Rect();

@@ -15,6 +15,7 @@
 struct Sprite
 {
 public:
+  virtual bool isObsticle() { return false; }
   virtual void render() {}
   virtual void stop() {}
   virtual void doCollision() {}

@@ -40,6 +40,10 @@ void Block::stop(){
   
 }
 
+bool Block::isObsticle() {
+  return true;
+}
+
 SDL_Rect Block::getBounds()
 {
   return { _p.x, _p.y, 32, 32 };

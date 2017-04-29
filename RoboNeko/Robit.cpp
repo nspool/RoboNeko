@@ -72,6 +72,10 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
 
   for(SDL_Rect o: *obsticles) {
     if(o.x == _p.x && o.y == _p.y) { continue; }
+    
+    // Only avoid when close to the obsticle
+    if(sqrt(pow(_p.x - o.x, 2) + pow(_p.y - o.y, 2)) > 100) { continue; }
+    
     // Modify the angle randomly to attempt to avoid collision.
     if(SDL_IntersectRectAndLine(&o, &P1.x, &P1.y, &target->x, &target->y) ||
        SDL_IntersectRectAndLine(&o, &P2.x, &P2.y, &target->x, &target->y) ||
@@ -91,7 +95,7 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   
   // TODO: Use obsticle obtains above to determine a path around
   if(willCollide) {
-    rad += (arc4random_uniform(3) - 1.5);
+    rad += (arc4random_uniform(1) > 1) ? -1.5 : 1.5;
   }
   
   // Set the new coordinates

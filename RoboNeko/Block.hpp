@@ -24,6 +24,7 @@ public:
   void render();
   void stop();
   void doCollision();
+  bool isObsticle();
   SDL_Rect getBounds();
 private:
   SDL_Point _p = {150, 150};
