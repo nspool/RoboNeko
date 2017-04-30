@@ -65,12 +65,10 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   
   bool willCollide = false;
   
-  int buf = 5;
-
-  SDL_Rect P1 = { _p.x - buf, _p.y - buf};
-  SDL_Rect P2 = { _p.x + buf + 21, _p.y + buf + 31 };
-  SDL_Rect P3 = { _p.x - buf, _p.y + buf + 31 };
-  SDL_Rect P4 = { _p.x + buf + 21, _p.y + buf };
+  SDL_Rect P1 = { _p.x, _p.y};
+  SDL_Rect P2 = { _p.x + 21, _p.y + 31 };
+  SDL_Rect P3 = { _p.x, _p.y + 31 };
+  SDL_Rect P4 = { _p.x + 21, _p.y };
 
   for(SDL_Rect o: *obsticles) {
     if(o.x == _p.x && o.y == _p.y) { continue; }
