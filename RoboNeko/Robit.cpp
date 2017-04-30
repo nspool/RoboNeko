@@ -95,9 +95,9 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   SDL_Rect center = {_p.x + 10, _p.y + 15};
   double rad = atan2((target->y - center.y), (target->x - center.x));
   
-  // TODO: Use obsticle obtains above to determine a path around
+  // TODO: Use obsticle to determine a path around
   if(willCollide) {
-    rad += (arc4random_uniform(1) > 1) ? -1.5 : 1.5;
+    rad += (arc4random_uniform(2) > 1 ? 1.571 : -1.571); // 90 degrees
   }
   
   // Set the new coordinates
