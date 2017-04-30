@@ -17,8 +17,8 @@
 
 #include "Sprite.hpp"
 
-constexpr int SCREEN_WIDTH = 640;
-constexpr int SCREEN_HEIGHT = 480;
+constexpr unsigned int SCREEN_WIDTH = 640;
+constexpr unsigned int SCREEN_HEIGHT = 480;
 
 #endif /* Robit_hpp */
 

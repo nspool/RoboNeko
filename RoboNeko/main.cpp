@@ -109,11 +109,16 @@ int main(int argc, const char * argv[]) {
   
   Sprite* robit1 = new Robit(_renderer,{0, 100});
   Sprite* robit2 = new Robit(_renderer, {500, 500});
-  Sprite* block = new Block(_renderer, {150, 150});
-
+  
+  
+  for(int i = 0; i<10; i++){
+    SDL_Point p = {(int)arc4random_uniform(SCREEN_WIDTH), (int)arc4random_uniform(SCREEN_HEIGHT)};
+    scene->Add(new Block(_renderer, p));
+  }
+  
+  
   scene->Add(robit1);
   scene->Add(robit2);
-  scene->Add(block);
   
   // Main event loop
   
