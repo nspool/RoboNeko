@@ -65,11 +65,14 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   
   bool willCollide = false;
   
-  SDL_Rect P1 = { _p.x, _p.y};
+  SDL_Rect P1 = { _p.x, _p.y };
   SDL_Rect P2 = { _p.x + 21, _p.y + 31 };
   SDL_Rect P3 = { _p.x, _p.y + 31 };
   SDL_Rect P4 = { _p.x + 21, _p.y };
+  SDL_Rect center = {_p.x + 10, _p.y + 15};
 
+  double collisionRad = 0;
+  
   for(SDL_Rect o: *obsticles) {
     if(o.x == _p.x && o.y == _p.y) { continue; }
     
@@ -77,10 +80,12 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
     if(sqrt(pow(_p.x - o.x, 2) + pow(_p.y - o.y, 2)) > 100) { continue; }
     
     // Modify the angle randomly to attempt to avoid collision.
+    // FIXME: only avoid the *nearest* obsticle
     if(SDL_IntersectRectAndLine(&o, &P1.x, &P1.y, &target->x, &target->y) ||
        SDL_IntersectRectAndLine(&o, &P2.x, &P2.y, &target->x, &target->y) ||
        SDL_IntersectRectAndLine(&o, &P3.x, &P3.y, &target->x, &target->y) ||
        SDL_IntersectRectAndLine(&o, &P4.x, &P4.y, &target->x, &target->y)){
+      collisionRad = atan2((o.y - center.y), (o.x - center.x));
       willCollide = true;
       break;
     }
@@ -90,12 +95,12 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   _prev = _p;
   
   // Interpolate the line between the current position and the target
-  SDL_Rect center = {_p.x + 10, _p.y + 15};
   double rad = atan2((target->y - center.y), (target->x - center.x));
   
   // TODO: Use obsticle to determine a path around
+  // Move perpendicular to the obsticle
   if(willCollide) {
-    rad += (arc4random_uniform(2) > 1 ? 1.571 : -1.571); // 90 degrees
+    rad = collisionRad + (arc4random_uniform(2) > 1 ? 1.4 : -1.4);
   }
   
   // Set the new coordinates
