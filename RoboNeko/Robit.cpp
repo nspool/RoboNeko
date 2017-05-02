@@ -52,6 +52,7 @@ void Robit::doCollision()
   // "revert" to the previous uncollided position
   _p = _prev;
   _isCollided = true;
+  _collisions++;
 }
 
 
@@ -91,16 +92,21 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
     }
   }
   
+  if(!willCollide) { _collisions--; }
+  
   // Save the current position if the update position enters a collision sate
   _prev = _p;
   
   // Interpolate the line between the current position and the target
   double rad = atan2((target->y - center.y), (target->x - center.x));
   
-  // TODO: Use obsticle to determine a path around
   // Move perpendicular to the obsticle
   if(willCollide) {
-    rad = collisionRad + (arc4random_uniform(2) > 1 ? 1.4 : -1.4);
+    // TODO: IDEA: Enumerate 3 random locations within a fixed radius
+    // If any of these 3 give a direct path to the target, pursue that target
+    
+    // Else just choose a random angle and hope
+    rad = collisionRad - 0.1 * _collisions;
   }
   
   // Set the new coordinates

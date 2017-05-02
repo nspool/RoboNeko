@@ -33,6 +33,7 @@ public:
   void action(SDL_Point* target, std::vector<SDL_Rect>* obsticles);
 private:
   bool _isCollided = false;
+  int _collisions = 0;
   int _lastTransition;
   int _startTime;
   SDL_Point _p = {0, 200};
