@@ -63,6 +63,26 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
     _isCollided = false;
     return;
   }
+
+  if(_currentTarget != nullptr) {
+    SDL_Rect bounds = getBounds();
+    if(SDL_PointInRect(_currentTarget, &bounds)){
+      _currentTarget = nullptr;
+      _onPath = false;
+//      SDL_Point zero = {0,0};
+//      _targets.push_back(&zero);
+    }
+  }
+  
+  if(_currentTarget == nullptr) {
+    if(_targets.size() < 1){
+      _currentTarget = target;
+    } else {
+      _onPath = true;
+      _currentTarget = _targets.back();
+      _targets.pop_back();
+    }
+  }
   
   bool willCollide = false;
   
@@ -82,10 +102,10 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
     
     // Modify the angle randomly to attempt to avoid collision.
     // FIXME: only avoid the *nearest* obsticle
-    if(SDL_IntersectRectAndLine(&o, &P1.x, &P1.y, &target->x, &target->y) ||
-       SDL_IntersectRectAndLine(&o, &P2.x, &P2.y, &target->x, &target->y) ||
-       SDL_IntersectRectAndLine(&o, &P3.x, &P3.y, &target->x, &target->y) ||
-       SDL_IntersectRectAndLine(&o, &P4.x, &P4.y, &target->x, &target->y)){
+    if(SDL_IntersectRectAndLine(&o, &P1.x, &P1.y, &_currentTarget->x, &_currentTarget->y) ||
+       SDL_IntersectRectAndLine(&o, &P2.x, &P2.y, &_currentTarget->x, &_currentTarget->y) ||
+       SDL_IntersectRectAndLine(&o, &P3.x, &P3.y, &_currentTarget->x, &_currentTarget->y) ||
+       SDL_IntersectRectAndLine(&o, &P4.x, &P4.y, &_currentTarget->x, &_currentTarget->y)){
       collisionRad = atan2((o.y - center.y), (o.x - center.x));
       willCollide = true;
       break;
@@ -98,15 +118,12 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   _prev = _p;
   
   // Interpolate the line between the current position and the target
-  double rad = atan2((target->y - center.y), (target->x - center.x));
+  double rad = atan2((_currentTarget->y - center.y), (_currentTarget->x - center.x));
   
   // Move perpendicular to the obsticle
   if(willCollide) {
-    // TODO: IDEA: Enumerate 3 random locations within a fixed radius
-    // If any of these 3 give a direct path to the target, pursue that target
-    
-    // Else just choose a random angle and hope
-    rad = collisionRad - 0.1 * _collisions;
+    // For now, just change the angle
+    rad = collisionRad - 1.5;
   }
   
   // Set the new coordinates
