@@ -69,8 +69,7 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
     if(SDL_PointInRect(_currentTarget, &bounds)){
       _currentTarget = nullptr;
       _onPath = false;
-//      SDL_Point zero = {0,0};
-//      _targets.push_back(&zero);
+      _targets.push_back(&ORIGIN);
     }
   }
   

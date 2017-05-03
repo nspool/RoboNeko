@@ -19,6 +19,7 @@
 
 constexpr unsigned int SCREEN_WIDTH = 640;
 constexpr unsigned int SCREEN_HEIGHT = 480;
+static SDL_Point ORIGIN = {0,0};
 
 #endif /* Robit_hpp */
 
