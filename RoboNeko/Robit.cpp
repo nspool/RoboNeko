@@ -85,14 +85,17 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   
   bool willCollide = false;
   
+  int width = 21;
+  int height = 31;
+  
   SDL_Rect P1 = { _p.x, _p.y };
-  SDL_Rect P2 = { _p.x + 21, _p.y + 31 };
-  SDL_Rect P3 = { _p.x, _p.y + 31 };
-  SDL_Rect P4 = { _p.x + 21, _p.y };
-  SDL_Rect center = {_p.x + 10, _p.y + 15};
+  SDL_Rect P2 = { _p.x + width, _p.y + height };
+  SDL_Rect P3 = { _p.x, _p.y + height };
+  SDL_Rect P4 = { _p.x + width, _p.y };
+  SDL_Rect center = {_p.x + width / 2, _p.y + height / 2};
 
   double collisionRad = 0;
-  
+  double collisionDistance = 0;
   for(SDL_Rect o: *obsticles) {
     if(o.x == _p.x && o.y == _p.y) { continue; }
     
@@ -105,8 +108,13 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
        SDL_IntersectRectAndLine(&o, &P2.x, &P2.y, &_currentTarget->x, &_currentTarget->y) ||
        SDL_IntersectRectAndLine(&o, &P3.x, &P3.y, &_currentTarget->x, &_currentTarget->y) ||
        SDL_IntersectRectAndLine(&o, &P4.x, &P4.y, &_currentTarget->x, &_currentTarget->y)){
-      collisionRad = atan2((o.y - center.y), (o.x - center.x));
       willCollide = true;
+      // Only avoid the *nearest* obsticle
+      double dist = ((center.x - o.x)*(center.x - o.x) + (center.y - o.y)*(center.y - o.y));
+      if(dist == 0 || dist < collisionDistance) {
+        collisionDistance = dist;
+        collisionRad = atan2((o.y - center.y), (o.x - center.x));
+      }
       break;
     }
   }
@@ -122,7 +130,7 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   // Move perpendicular to the obsticle
   if(willCollide) {
     // For now, just change the angle
-    rad = collisionRad - 1.5;
+    rad = collisionRad - 0.75;
   }
   
   // Set the new coordinates
