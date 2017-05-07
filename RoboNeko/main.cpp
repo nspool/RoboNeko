@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+#include <OpenGL/gl.h>
+
 #include "Scene.hpp"
 #include "Robit.hpp"
 #include "Block.hpp"
@@ -23,6 +25,8 @@ int mouseX = 0;
 int mouseY = 0;
 int oldMouseX = 0;
 int oldMouseY = 0;
+int windowX = 0;
+int windowY = 0;
 int currentTranceDirection = 0;
 
 SDL_Surface *load_image(std::string filename)
@@ -80,7 +84,8 @@ int main(int argc, const char * argv[]) {
   SDL_SetEventFilter(event_filter, NULL);
   
   //Create window
-  SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+   SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_BORDERLESS );
+
   SDL_SetWindowTitle(window, "RoboNeko");
   
   if(window == 0)
@@ -123,38 +128,23 @@ int main(int argc, const char * argv[]) {
   // Main event loop
   
   do {
-    while(SDL_PollEvent(&e) != 0)
+    
+    if(SDL_PollEvent(&e) != 0)
     {
-      switch (e.type) {
-        case SDL_FINGERDOWN:
-//          printf("finger down\n");
-//          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
-          break;
-        case SDL_FINGERMOTION:
-//          printf("finger motion\n");
-//          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
-          break;
-        case SDL_FINGERUP:
-//          printf("finger up\n");
-//          printf("%f %f\n", e.tfinger.x, e.tfinger.y);
-          break;
-        case SDL_MOUSEBUTTONDOWN:
-          break;
-        case SDL_MOUSEMOTION:
-          mouseX = e.motion.x;
-          mouseY = e.motion.y;
-          break;
-        case SDL_MOUSEBUTTONUP:
-          break;
-        case SDL_QUIT:
+      if (e.type == SDL_QUIT) {
           quit = true;
       }
     }
   
+    SDL_GetWindowPosition(window, &windowX, &windowY);
+    SDL_GetGlobalMouseState(&mouseX, &mouseY);
+    
     // Clear window
-    SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+    // SDL_SetWindowOpacity(window, 0.5);
+    SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0 );
     SDL_RenderClear( _renderer );
-    SDL_Point mountPoint = {mouseX, mouseY};
+    
+    SDL_Point mountPoint = {mouseX - windowX, mouseY - windowY};
     scene->doEvent(&mountPoint);
 
     SDL_RenderPresent( _renderer );
