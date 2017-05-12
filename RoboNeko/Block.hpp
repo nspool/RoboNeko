@@ -23,7 +23,7 @@ public:
   Block(SDL_Renderer* _renderer, SDL_Point p);
   void render();
   void stop();
-  void doCollision();
+  void doCollision(SDL_Rect*);
   bool isObsticle();
   SDL_Rect getBounds();
 private:

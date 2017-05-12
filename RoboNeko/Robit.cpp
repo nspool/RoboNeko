@@ -47,22 +47,25 @@ void Robit::stop()
   SDL_RenderCopy( _renderer, _texture, &_spriteClips[1], &robitLoc );
 }
 
-void Robit::doCollision()
+void Robit::doCollision(SDL_Rect* rect)
 {
-  // "revert" to the previous uncollided position
-  _p = _prev;
+  double collisionRad = atan2((_currentTarget->y - rect->y), (_currentTarget->x - rect->x));
+  double rad = collisionRad - 1.55 + ((double)arc4random_uniform(1) - 0.5);
+  
+  _currentTarget-> x = cos(rad);
+  _currentTarget-> y = sin(rad);
+  
   _isCollided = true;
-  _collisions++;
 }
 
 
 void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
 {
   
-  if(_isCollided == true) {
-    _isCollided = false;
-    return;
-  }
+//  if(_isCollided == true) {
+//    _isCollided = false;
+//    return;
+//  }
 
   if(_currentTarget != nullptr) {
     SDL_Rect bounds = getBounds();
@@ -95,42 +98,40 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
   SDL_Rect center = {_p.x + width / 2, _p.y + height / 2};
 
   double collisionRad = 0;
-  double collisionDistance = 0;
+  double collisionDistance = 100;
+  
   for(SDL_Rect o: *obsticles) {
+    
     if(o.x == _p.x && o.y == _p.y) { continue; }
     
     // Only avoid when close to the obsticle
-    if(sqrt(pow(_p.x - o.x, 2) + pow(_p.y - o.y, 2)) > 100) { continue; }
+    if(sqrt(pow(_p.x - o.x, 2) + pow(_p.y - o.y, 2)) > collisionDistance) { continue; }
     
     // Modify the angle randomly to attempt to avoid collision.
-    // FIXME: only avoid the *nearest* obsticle
     if(SDL_IntersectRectAndLine(&o, &P1.x, &P1.y, &_currentTarget->x, &_currentTarget->y) ||
        SDL_IntersectRectAndLine(&o, &P2.x, &P2.y, &_currentTarget->x, &_currentTarget->y) ||
        SDL_IntersectRectAndLine(&o, &P3.x, &P3.y, &_currentTarget->x, &_currentTarget->y) ||
        SDL_IntersectRectAndLine(&o, &P4.x, &P4.y, &_currentTarget->x, &_currentTarget->y)){
+      
+      collisionRad = atan2((o.y - center.y), (o.x - center.x));
       willCollide = true;
-      // Only avoid the *nearest* obsticle
-      double dist = ((center.x - o.x)*(center.x - o.x) + (center.y - o.y)*(center.y - o.y));
-      if(dist == 0 || dist < collisionDistance) {
-        collisionDistance = dist;
-        collisionRad = atan2((o.y - center.y), (o.x - center.x));
-      }
+      
+      _targets.push_back(_currentTarget);
+      
       break;
     }
   }
-  
-  if(!willCollide) { _collisions--; }
-  
-  // Save the current position if the update position enters a collision sate
-  _prev = _p;
-  
+
   // Interpolate the line between the current position and the target
   double rad = atan2((_currentTarget->y - center.y), (_currentTarget->x - center.x));
   
   // Move perpendicular to the obsticle
   if(willCollide) {
     // For now, just change the angle
-    rad = collisionRad - 0.75;
+    rad = collisionRad - 1.55 + ((double)arc4random_uniform(1) - 0.5);
+    _currentTarget-> x = cos(rad);
+    _currentTarget-> y = sin(rad);
+
   }
   
   // Set the new coordinates

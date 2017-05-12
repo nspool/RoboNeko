@@ -35,7 +35,7 @@ void Scene::doEvent(SDL_Point *p)
       SDL_Rect r_rect = r->getBounds();
       SDL_Rect s_rect = s->getBounds();
       if(SDL_IntersectRect(&r_rect, &s_rect, &result)== SDL_TRUE) {
-        r->doCollision();
+        r->doCollision(&s_rect);
       }
     }
   }
