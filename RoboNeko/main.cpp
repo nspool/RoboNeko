@@ -15,7 +15,6 @@
 
 #include "Scene.hpp"
 #include "Robit.hpp"
-#include "Block.hpp"
 
 SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
@@ -84,7 +83,7 @@ int main(int argc, const char * argv[]) {
   SDL_SetEventFilter(event_filter, NULL);
   
   //Create window
-   SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_BORDERLESS );
+   SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 
   SDL_SetWindowTitle(window, "RoboNeko");
   
@@ -102,31 +101,24 @@ int main(int argc, const char * argv[]) {
     return 1;
   }
   
-  //Initialize renderer color
+  // Initialize renderer color
   SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-    
-  bool quit = false;
-  
-  // event handler
-  SDL_Event e;
-  
+
+  // Initialize
   Scene* scene = new Scene(_renderer);
   
-  Sprite* robit1 = new Robit(_renderer,{0, 100});
-  Sprite* robit2 = new Robit(_renderer, {500, 500});
+  SDL_Point startingPoint = {(int)arc4random_uniform(SCREEN_WIDTH), (int)arc4random_uniform(SCREEN_HEIGHT)};
   
+  Sprite* robit = new Robit(_renderer, startingPoint);
   
-  for(int i = 0; i<10; i++){
-    SDL_Point p = {(int)arc4random_uniform(SCREEN_WIDTH), (int)arc4random_uniform(SCREEN_HEIGHT)};
-    scene->Add(new Block(_renderer, p));
-  }
-  
-  
-  scene->Add(robit1);
-  scene->Add(robit2);
+  scene->Add(robit);
+
   
   // Main event loop
   
+  SDL_Event e;
+  bool quit = false;
+
   do {
     
     if(SDL_PollEvent(&e) != 0)
