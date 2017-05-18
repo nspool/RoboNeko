@@ -37,6 +37,7 @@ private:
   int _lastTransition;
   int _startTime;
   SDL_Point* _currentTarget = nullptr;
+  bool _isStopped = false;
   bool _onPath = false;
   std::vector<SDL_Point*> _targets;
   SDL_Point _p = {0, 200};
@@ -47,6 +48,6 @@ private:
   int _lastMouseX = 0;
   int _lastMouseY = 0;
   SDL_Renderer* _renderer = 0;
-  SDL_Rect _spriteClips[3];
+  SDL_Rect _spriteClips[4];
   SDL_Texture* _texture;
 };

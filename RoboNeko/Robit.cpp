@@ -14,8 +14,7 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
   _p = p;
   _renderer = renderer;
   
-  // Load the robit
-  SDL_Surface* gRobits = IMG_Load( "robits.png" );
+  SDL_Surface* gRobits = IMG_Load("./robits.png");
   
   if(gRobits == 0)
   {
@@ -38,13 +37,18 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
   _spriteClips[2].w = 21;
   _spriteClips[2].h = 31;
   
-  _texture = SDL_CreateTextureFromSurface( renderer, gRobits );
+  _spriteClips[3].x = 63;
+  _spriteClips[3].y = 0;
+  _spriteClips[3].w = 21;
+  _spriteClips[3].h = 31;
+
+  _texture = SDL_CreateTextureFromSurface(renderer, gRobits);
+  
 }
 
 void Robit::stop()
 {
-  SDL_Rect robitLoc = { _p.x, _p.y, 21, 31 };
-  SDL_RenderCopy( _renderer, _texture, &_spriteClips[1], &robitLoc );
+  _isStopped = true;
 }
 
 void Robit::doCollision(SDL_Rect* rect)
@@ -62,17 +66,13 @@ void Robit::doCollision(SDL_Rect* rect)
 void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
 {
   
-//  if(_isCollided == true) {
-//    _isCollided = false;
-//    return;
-//  }
-
+  if(_isStopped) { return; }
+  
   if(_currentTarget != nullptr) {
     SDL_Rect bounds = getBounds();
     if(SDL_PointInRect(_currentTarget, &bounds)){
-      _currentTarget = nullptr;
-      _onPath = false;
-      _targets.push_back(&ORIGIN);
+      stop();
+      return;
     }
   }
   
@@ -156,10 +156,14 @@ SDL_Rect Robit::getBounds()
 
 void Robit::render()
 {
-  // Animate at some fixed framerate
-  constexpr int animationRate = 12;
-  constexpr int animationLen = 3;
-  int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
   SDL_Rect bounds = getBounds();
-  SDL_RenderCopy( _renderer, _texture, &_spriteClips[frameToDraw], &bounds );
+  if(_isStopped) {
+    SDL_RenderCopy(_renderer, _texture, &_spriteClips[3], &bounds);
+  } else {
+    // Animate at some fixed framerate
+    constexpr int animationRate = 12;
+    constexpr int animationLen = 3;
+    int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
+    SDL_RenderCopy( _renderer, _texture, &_spriteClips[frameToDraw], &bounds );
+  }
 }
