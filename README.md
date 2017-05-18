@@ -1,8 +1,7 @@
 # RoboNeko
-Project for learning SDL2, modelled after the classic Neko applet for OS/2.
+
+Project for learning SDL2, modelled after the classic Neko applet for X11.
 
 # TODO
 
-- Implement collision detection with other bots
-- Add different states such as collision, sleeping etc.
-
+- Sleep  & awake behavior
