@@ -19,6 +19,9 @@
 SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
 
+constexpr unsigned int SCREEN_WIDTH = 640;
+constexpr unsigned int SCREEN_HEIGHT = 480;
+
 bool isMobile = false;
 int mouseX = 0;
 int mouseY = 0;

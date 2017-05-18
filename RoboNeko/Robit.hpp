@@ -17,10 +17,6 @@
 
 #include "Sprite.hpp"
 
-constexpr unsigned int SCREEN_WIDTH = 640;
-constexpr unsigned int SCREEN_HEIGHT = 480;
-static SDL_Point ORIGIN = {0,0};
-
 #endif /* Robit_hpp */
 
 class Robit : public Sprite
@@ -48,6 +44,6 @@ private:
   int _lastMouseX = 0;
   int _lastMouseY = 0;
   SDL_Renderer* _renderer = 0;
-  SDL_Rect _spriteClips[4];
+  SDL_Rect _spriteClips[6];
   SDL_Texture* _texture;
 };

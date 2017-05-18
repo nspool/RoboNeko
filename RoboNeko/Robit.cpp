@@ -14,7 +14,7 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
   _p = p;
   _renderer = renderer;
   
-  SDL_Surface* gRobits = IMG_Load("./robits.png");
+  SDL_Surface* gRobits = IMG_Load("robits.png");
   
   if(gRobits == 0)
   {
@@ -42,6 +42,16 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
   _spriteClips[3].w = 21;
   _spriteClips[3].h = 31;
 
+  _spriteClips[4].x = 84;
+  _spriteClips[4].y = 0;
+  _spriteClips[4].w = 21;
+  _spriteClips[4].h = 31;
+  
+  _spriteClips[5].x = 105;
+  _spriteClips[5].y = 0;
+  _spriteClips[5].w = 21;
+  _spriteClips[5].h = 31;
+  
   _texture = SDL_CreateTextureFromSurface(renderer, gRobits);
   
 }
@@ -158,7 +168,7 @@ void Robit::render()
 {
   SDL_Rect bounds = getBounds();
   if(_isStopped) {
-    SDL_RenderCopy(_renderer, _texture, &_spriteClips[3], &bounds);
+    SDL_RenderCopy(_renderer, _texture, &_spriteClips[5], &bounds);
   } else {
     // Animate at some fixed framerate
     constexpr int animationRate = 12;
