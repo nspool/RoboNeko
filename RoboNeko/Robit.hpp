@@ -32,8 +32,10 @@ private:
   bool _isCollided = false;
   int _lastTransition;
   int _startTime;
+  int _stopTime;
   SDL_Point* _currentTarget = nullptr;
   bool _isStopped = false;
+  bool _wasStopped = false;
   bool _onPath = false;
   std::vector<SDL_Point*> _targets;
   SDL_Point _p = {0, 200};

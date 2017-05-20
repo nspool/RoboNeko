@@ -59,6 +59,7 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
 void Robit::stop()
 {
   _isStopped = true;
+  _stopTime = SDL_GetTicks();
 }
 
 void Robit::doCollision(SDL_Rect* rect)
@@ -76,7 +77,29 @@ void Robit::doCollision(SDL_Rect* rect)
 void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
 {
   
-  if(_isStopped) { return; }
+  if(_isStopped) {
+    SDL_Rect bounds = getBounds();
+    if(SDL_PointInRect(target, &bounds)) {
+      _stopTime = SDL_GetTicks();
+      return;
+    }
+    if( (SDL_GetTicks() - _stopTime) > 1000 ) {
+      _isStopped = false;
+      _wasStopped = true;
+      _stopTime = SDL_GetTicks();
+    } else {
+      return;
+    }
+  }
+  
+  if(_wasStopped) {
+    if( (SDL_GetTicks() - _stopTime) > 1000 ) {
+      _isStopped = false;
+      _wasStopped = false;
+    } else {
+      return;
+    }
+  }
   
   if(_currentTarget != nullptr) {
     SDL_Rect bounds = getBounds();
@@ -169,7 +192,9 @@ void Robit::render()
   SDL_Rect bounds = getBounds();
   if(_isStopped) {
     SDL_RenderCopy(_renderer, _texture, &_spriteClips[5], &bounds);
-  } else {
+  } else if(_wasStopped) {
+    SDL_RenderCopy(_renderer, _texture, &_spriteClips[3], &bounds);
+  }else {
     // Animate at some fixed framerate
     constexpr int animationRate = 12;
     constexpr int animationLen = 3;
