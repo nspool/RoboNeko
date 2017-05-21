@@ -28,70 +28,52 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point initialPosition)
     printf("Failed to load images! SDL_Error: %s\n", SDL_GetError());
   }
   
-  // Setup Robit animation
-  _frame[0].x = 0;
-  _frame[0].y = 0;
-  _frame[0].w = 21;
-  _frame[0].h = 31;
+  constexpr int sprite_width = 21;
+  for(int i=0; i<(robit_data.width/sprite_width); i++) {
+    SDL_Rect r = SDL_Rect();
+    r.x =i*sprite_width;
+    r.h = 0;
+    r.w = sprite_width;
+    r.h = robit_data.height;
+    _frames.push_back(r);
+  }
+    
+  _spriteSheet = SDL_CreateTextureFromSurface(renderer, gRobits);
   
-  _frame[1].x = 21;
-  _frame[1].y = 0;
-  _frame[1].w = 21;
-  _frame[1].h = 31;
-  
-  _frame[2].x = 42;
-  _frame[2].y = 0;
-  _frame[2].w = 21;
-  _frame[2].h = 31;
-  
-  _frame[3].x = 63;
-  _frame[3].y = 0;
-  _frame[3].w = 21;
-  _frame[3].h = 31;
+  changeState(Pursue);
+}
 
-  _frame[4].x = 84;
-  _frame[4].y = 0;
-  _frame[4].w = 21;
-  _frame[4].h = 31;
-  
-  _frame[5].x = 105;
-  _frame[5].y = 0;
-  _frame[5].w = 21;
-  _frame[5].h = 31;
-  
-  _texture = SDL_CreateTextureFromSurface(renderer, gRobits);
-  
+void Robit::changeState(RobitState newState) {
+  _state = newState;
+  _lastChangeTime = SDL_GetTicks();
 }
 
 void Robit::render(SDL_Point* target)
 {
   // TODO: Replace with a switch around the RobitState
-  if(_isStopped) {
+  if(_state == Stop) {
     SDL_Rect bounds = getBounds();
     if(SDL_PointInRect(target, &bounds)) {
-      _stopTime = SDL_GetTicks();
+      _lastChangeTime = SDL_GetTicks();
     }
-    if( (SDL_GetTicks() - _stopTime) > 1000 ) {
-      _isStopped = false;
-      _wasStopped = true;
-      _stopTime = SDL_GetTicks();
+    if( (SDL_GetTicks() - _lastChangeTime) > 1000 ) {
+      changeState(Wait);
+      _lastChangeTime = SDL_GetTicks();
     }
   }
   
-  if(_wasStopped) {
-    if( (SDL_GetTicks() - _stopTime) > 1000 ) {
-      _isStopped = false;
-      _wasStopped = false;
+  if(_state == Wait) {
+    if( (SDL_GetTicks() - _lastChangeTime) > 1000 ) {
+      changeState(Pursue);
     }
   }
   
   SDL_Rect bounds = getBounds();
   if(SDL_PointInRect(target, &bounds)){
-    _isStopped = true;
-    _stopTime = SDL_GetTicks();
+    changeState(Stop);
   }
   
-  if(!_isStopped && !_wasStopped) {
+  if(!(_state == Stop) && !(_state == Wait)) {
     int width = 21;
     int height = 31;
     
@@ -116,16 +98,16 @@ void Robit::render(SDL_Point* target)
   
   bounds = getBounds();
   
-  if(_isStopped) {
-    SDL_RenderCopy(_renderer, _texture, &_frame[5], &bounds);
-  } else if(_wasStopped) {
-    SDL_RenderCopy(_renderer, _texture, &_frame[3], &bounds);
+  if(_state == Stop) {
+    SDL_RenderCopy(_renderer, _spriteSheet, &_frames[5], &bounds);
+  } else if(_state == Wait) {
+    SDL_RenderCopy(_renderer, _spriteSheet, &_frames[3], &bounds);
   }else {
     // Animate at some fixed framerate
     constexpr int animationRate = 12;
     constexpr int animationLen = 3;
-    int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
-    SDL_RenderCopy( _renderer, _texture, &_frame[frameToDraw], &bounds);
+    int frameToDraw = ((SDL_GetTicks() - _lastChangeTime) * animationRate / 1000) % animationLen;
+    SDL_RenderCopy( _renderer, _spriteSheet, &_frames[frameToDraw], &bounds);
   }
 }
 
