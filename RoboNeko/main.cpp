@@ -19,8 +19,8 @@
 SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
 
-constexpr unsigned int SCREEN_WIDTH = 640;
-constexpr unsigned int SCREEN_HEIGHT = 480;
+constexpr unsigned int WINDOW_WIDTH = 640;
+constexpr unsigned int WINDOW_HEIGHT = 480;
 
 bool isMobile = false;
 int mouseX = 0;
@@ -86,7 +86,7 @@ int main(int argc, const char * argv[]) {
   SDL_SetEventFilter(event_filter, NULL);
   
   //Create window
-   SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+   SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN );
 
   SDL_SetWindowTitle(window, "RoboNeko");
   
@@ -110,7 +110,7 @@ int main(int argc, const char * argv[]) {
   // Initialize
   Scene* scene = new Scene(_renderer);
   
-  SDL_Point startingPoint = {(int)arc4random_uniform(SCREEN_WIDTH), (int)arc4random_uniform(SCREEN_HEIGHT)};
+  SDL_Point startingPoint = {(int)arc4random_uniform(WINDOW_WIDTH), (int)arc4random_uniform(WINDOW_HEIGHT)};
   
   Sprite* robit = new Robit(_renderer, startingPoint);
   

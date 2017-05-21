@@ -19,7 +19,7 @@ public:
   virtual void render() {}
   virtual void stop() {}
   virtual void doCollision(SDL_Rect* rect) {}
-  virtual void action(SDL_Point* target, std::vector<SDL_Rect>* obsticles) {};
+  virtual void action(SDL_Point* target) {};
   virtual SDL_Rect getBounds() { return SDL_Rect(); }
 };
 

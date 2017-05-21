@@ -62,21 +62,9 @@ void Robit::stop()
   _stopTime = SDL_GetTicks();
 }
 
-void Robit::doCollision(SDL_Rect* rect)
+void Robit::action(SDL_Point* target)
 {
-  double collisionRad = atan2((_currentTarget->y - rect->y), (_currentTarget->x - rect->x));
-  double rad = collisionRad - 1.55 + ((double)arc4random_uniform(1) - 0.5);
-  
-  _currentTarget-> x = cos(rad);
-  _currentTarget-> y = sin(rad);
-  
-  _isCollided = true;
-}
-
-
-void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
-{
-  
+  // TODO: Replace with a switch around the RobitState
   if(_isStopped) {
     SDL_Rect bounds = getBounds();
     if(SDL_PointInRect(target, &bounds)) {
@@ -101,71 +89,18 @@ void Robit::action(SDL_Point* target, std::vector<SDL_Rect>* obsticles)
     }
   }
   
-  if(_currentTarget != nullptr) {
-    SDL_Rect bounds = getBounds();
-    if(SDL_PointInRect(_currentTarget, &bounds)){
-      stop();
-      return;
-    }
+  SDL_Rect bounds = getBounds();
+  if(SDL_PointInRect(target, &bounds)){
+    stop();
+    return;
   }
-  
-  if(_currentTarget == nullptr) {
-    if(_targets.size() < 1){
-      _currentTarget = target;
-    } else {
-      _onPath = true;
-      _currentTarget = _targets.back();
-      _targets.pop_back();
-    }
-  }
-  
-  bool willCollide = false;
   
   int width = 21;
   int height = 31;
   
-  SDL_Rect P1 = { _p.x, _p.y };
-  SDL_Rect P2 = { _p.x + width, _p.y + height };
-  SDL_Rect P3 = { _p.x, _p.y + height };
-  SDL_Rect P4 = { _p.x + width, _p.y };
-  SDL_Rect center = {_p.x + width / 2, _p.y + height / 2};
-
-  double collisionRad = 0;
-  double collisionDistance = 100;
-  
-  for(SDL_Rect o: *obsticles) {
-    
-    if(o.x == _p.x && o.y == _p.y) { continue; }
-    
-    // Only avoid when close to the obsticle
-    if(sqrt(pow(_p.x - o.x, 2) + pow(_p.y - o.y, 2)) > collisionDistance) { continue; }
-    
-    // Modify the angle randomly to attempt to avoid collision.
-    if(SDL_IntersectRectAndLine(&o, &P1.x, &P1.y, &_currentTarget->x, &_currentTarget->y) ||
-       SDL_IntersectRectAndLine(&o, &P2.x, &P2.y, &_currentTarget->x, &_currentTarget->y) ||
-       SDL_IntersectRectAndLine(&o, &P3.x, &P3.y, &_currentTarget->x, &_currentTarget->y) ||
-       SDL_IntersectRectAndLine(&o, &P4.x, &P4.y, &_currentTarget->x, &_currentTarget->y)){
-      
-      collisionRad = atan2((o.y - center.y), (o.x - center.x));
-      willCollide = true;
-      
-      _targets.push_back(_currentTarget);
-      
-      break;
-    }
-  }
-
   // Interpolate the line between the current position and the target
-  double rad = atan2((_currentTarget->y - center.y), (_currentTarget->x - center.x));
-  
-  // Move perpendicular to the obsticle
-  if(willCollide) {
-    // For now, just change the angle
-    rad = collisionRad - 1.55 + ((double)arc4random_uniform(1) - 0.5);
-    _currentTarget-> x = cos(rad);
-    _currentTarget-> y = sin(rad);
-
-  }
+  SDL_Rect center = {_p.x + width / 2, _p.y + height / 2};
+  double rad = atan2((target->y - center.y), (target->x - center.x));
   
   // Set the new coordinates
   _xDelta += cos(rad);

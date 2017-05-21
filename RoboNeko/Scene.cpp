@@ -21,28 +21,10 @@ void Scene::Add(Sprite *sprite)
 void Scene::doEvent(SDL_Point *p)
 {
   std::vector<SDL_Rect> obsticles;
-  
-  // Quick & Dirty collision detection
-  for(auto& r : _sprites) {
-    
-    if(r->isObsticle()) {
-      obsticles.push_back(r->getBounds());
-    }
-    
-    for(auto& s : _sprites) {
-      if(r == s) { continue; }
-      SDL_Rect result = SDL_Rect();
-      SDL_Rect r_rect = r->getBounds();
-      SDL_Rect s_rect = s->getBounds();
-      if(SDL_IntersectRect(&r_rect, &s_rect, &result)== SDL_TRUE) {
-        r->doCollision(&s_rect);
-      }
-    }
-  }
-  
+
   // Update the sprite goals
   for(auto& r : _sprites) {
-    r->action(p, &obsticles);
+    r->action(p);
   }
   
   // Render the next frame

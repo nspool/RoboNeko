@@ -19,6 +19,8 @@
 
 #endif /* Robit_hpp */
 
+enum RobitState { Pursue, Stop, Wait, Sleep };
+
 class Robit : public Sprite
 {
 public:
@@ -26,20 +28,18 @@ public:
   SDL_Rect getBounds();
   void render();
   void stop();
-  void doCollision(SDL_Rect*);
-  void action(SDL_Point* target, std::vector<SDL_Rect>* obsticles);
+  void action(SDL_Point* target);
 private:
+  RobitState _state = RobitState::Pursue;
   bool _isCollided = false;
   int _lastTransition;
   int _startTime;
   int _stopTime;
-  SDL_Point* _currentTarget = nullptr;
   bool _isStopped = false;
   bool _wasStopped = false;
-  bool _onPath = false;
-  std::vector<SDL_Point*> _targets;
+
+  
   SDL_Point _p = {0, 200};
-  SDL_Point _prev = {0, 200};
   double _rad = M_PI_2;
   double _xDelta = 0;
   double _yDelta = 0;
