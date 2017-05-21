@@ -114,7 +114,7 @@ int main(int argc, const char * argv[]) {
   
   Sprite* robit = new Robit(_renderer, startingPoint);
   
-  scene->Add(robit);
+  scene->add(robit);
 
   
   // Main event loop
@@ -133,16 +133,12 @@ int main(int argc, const char * argv[]) {
   
     SDL_GetWindowPosition(window, &windowX, &windowY);
     SDL_GetGlobalMouseState(&mouseX, &mouseY);
-    
-    // Clear window
-    // SDL_SetWindowOpacity(window, 0.5);
     SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0 );
-    SDL_RenderClear( _renderer );
-    
+    SDL_RenderClear(_renderer);
     SDL_Point mountPoint = {mouseX - windowX, mouseY - windowY};
-    scene->doEvent(&mountPoint);
+    scene->render(&mountPoint);
 
-    SDL_RenderPresent( _renderer );
+    SDL_RenderPresent(_renderer);
     
   } while(!quit);
   

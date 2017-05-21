@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		731747C31EBF1F93005881B6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731747C21EBF1F93005881B6 /* OpenGL.framework */; };
 		732522FF1ECD9DA4000614E8 /* robits.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 730A16EB1E8A715E003D7DBD /* robits.png */; };
 		73373CA21E7A8D8400E53F1C /* Robit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA01E7A8D8400E53F1C /* Robit.cpp */; };
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
@@ -31,7 +30,6 @@
 
 /* Begin PBXFileReference section */
 		730A16EB1E8A715E003D7DBD /* robits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robits.png; sourceTree = "<group>"; };
-		731747C21EBF1F93005881B6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		73373CA01E7A8D8400E53F1C /* Robit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robit.cpp; sourceTree = "<group>"; };
 		73373CA11E7A8D8400E53F1C /* Robit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Robit.hpp; sourceTree = "<group>"; };
 		734F6E4F1EAF44B6008AAF17 /* Sprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Sprite.hpp; sourceTree = "<group>"; };
@@ -48,7 +46,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				731747C31EBF1F93005881B6 /* OpenGL.framework in Frameworks */,
 				735C24981E70011F00D37174 /* SDL2_image.framework in Frameworks */,
 				735C24961E70000E00D37174 /* SDL2.framework in Frameworks */,
 			);
@@ -126,7 +123,6 @@
 		735C24941E70000E00D37174 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				731747C21EBF1F93005881B6 /* OpenGL.framework */,
 				735C24971E70011F00D37174 /* SDL2_image.framework */,
 				735C24951E70000E00D37174 /* SDL2.framework */,
 			);

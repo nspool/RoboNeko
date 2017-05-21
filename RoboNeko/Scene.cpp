@@ -13,12 +13,12 @@ Scene::Scene(SDL_Renderer* renderer)
   _renderer = renderer;
 }
 
-void Scene::Add(Sprite *sprite)
+void Scene::add(Sprite *sprite)
 {
   _sprites.push_back(sprite);
 }
 
-void Scene::doEvent(SDL_Point *p)
+void Scene::render(SDL_Point *p)
 {
   std::vector<SDL_Rect> obsticles;
 

@@ -21,9 +21,8 @@ class Scene
 {
 public:
   Scene(SDL_Renderer* _renderer);
-  void Add(Sprite* sprite);
-  void Render();
-  void doEvent(SDL_Point* p);
+  void add(Sprite* sprite);
+  void render(SDL_Point* p);
 private:
   SDL_Renderer* _renderer;
   std::vector<Sprite*> _sprites;
