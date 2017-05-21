@@ -9,17 +9,12 @@
 #ifndef Sprite_hpp
 #define Sprite_hpp
 
-#include <vector>
 #include <SDL2/SDL.h>
 
 struct Sprite
 {
 public:
-  virtual bool isObsticle() { return false; }
-  virtual void render() {}
-  virtual void stop() {}
-  virtual void doCollision(SDL_Rect* rect) {}
-  virtual void action(SDL_Point* target) {};
+  virtual void render(SDL_Point* target) {}
   virtual SDL_Rect getBounds() { return SDL_Rect(); }
 };
 

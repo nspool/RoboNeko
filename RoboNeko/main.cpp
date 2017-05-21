@@ -9,50 +9,13 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdocumentation"
 
-#include <iostream>
-
-#include <OpenGL/gl.h>
-
 #include "Scene.hpp"
 #include "Robit.hpp"
 
 #include "robits.h"
 
-SDL_Surface* _background = 0;
-SDL_Renderer* _renderer = 0;
-
 constexpr unsigned int WINDOW_WIDTH = 640;
 constexpr unsigned int WINDOW_HEIGHT = 480;
-
-bool isMobile = false;
-int mouseX = 0;
-int mouseY = 0;
-int oldMouseX = 0;
-int oldMouseY = 0;
-int windowX = 0;
-int windowY = 0;
-int currentTranceDirection = 0;
-
-int
-event_filter(void* userdata, SDL_Event* event)
-{
-  if(isMobile == 1) {
-    switch(event->type) {
-      case SDL_MOUSEBUTTONDOWN:
-      case SDL_MOUSEMOTION:
-      case SDL_MOUSEBUTTONUP:
-        return 0;
-    }
-  } else {
-    switch(event->type) {
-      case SDL_FINGERDOWN:
-      case SDL_FINGERMOTION:
-      case SDL_FINGERUP:
-        return 0;
-    }
-  }
-  return 1;
-}
 
 int main(int argc, const char * argv[]) {
   
@@ -61,51 +24,32 @@ int main(int argc, const char * argv[]) {
     std::cout << "Failed to initialise SDL!" << std::endl;
     return 1;
   }
-  
-  if(IMG_Init( IMG_INIT_PNG | IMG_INIT_JPG) < 0)
-  {
-    std::cout << "Failed to initialise SDL_image!" << std::endl;
-    return 1;
-  }
-  
-  // Check platform
-  const char* platform = SDL_GetPlatform();
-  if(platform[0] == 'i' || platform[0] == 'A') {
-    isMobile = 1;
-  }
-  SDL_SetEventFilter(event_filter, NULL);
-  
-  //Create window
+
   SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
-  SDL_SetWindowTitle(window, "RoboNeko");
-  
   if(window == 0)
   {
-    printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+    printf("SDL_CreateWindow: SDL_Error: %s\n", SDL_GetError());
     return 1;
   }
   
-  _renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-  
-  if(_renderer == 0)
+  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  if(renderer == 0)
   {
-    printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+    printf("SDL_CreateRenderer: SDL Error: %s\n", SDL_GetError());
     return 1;
   }
   
-  // Initialize renderer color
-  SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+  SDL_SetWindowTitle(window, "RoboNeko");
+  SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
   // Initialize
-  Scene* scene = new Scene(_renderer);
   
-  SDL_Point startingPoint = {(int)arc4random_uniform(WINDOW_WIDTH), (int)arc4random_uniform(WINDOW_HEIGHT)};
+  Scene* scene = new Scene(renderer);
   
-  Sprite* robit = new Robit(_renderer, startingPoint);
+  Sprite* robit = new Robit(renderer, {(int)arc4random_uniform(WINDOW_WIDTH), (int)arc4random_uniform(WINDOW_HEIGHT)});
   
   scene->add(robit);
 
-  
   // Main event loop
   
   SDL_Event e;
@@ -119,22 +63,21 @@ int main(int argc, const char * argv[]) {
           quit = true;
       }
     }
-  
+
+    int windowX, windowY, mouseX, mouseY;
     SDL_GetWindowPosition(window, &windowX, &windowY);
     SDL_GetGlobalMouseState(&mouseX, &mouseY);
-    SDL_SetRenderDrawColor( _renderer, 0xFF, 0xFF, 0xFF, 0 );
-    SDL_RenderClear(_renderer);
-    SDL_Point mountPoint = {mouseX - windowX, mouseY - windowY};
-    scene->render(&mountPoint);
+    SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0 );
+    SDL_RenderClear(renderer);
+    
+    SDL_Point mousePoint = {mouseX - windowX, mouseY - windowY};
+    scene->render(&mousePoint);
 
-    SDL_RenderPresent(_renderer);
+    SDL_RenderPresent(renderer);
     
   } while(!quit);
   
-  //Destroy window
   SDL_DestroyWindow(window);
-  
-  //Quit SDL subsystems
   SDL_Quit();
   
   return 0;

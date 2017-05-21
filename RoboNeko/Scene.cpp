@@ -24,11 +24,6 @@ void Scene::render(SDL_Point *p)
 
   // Update the sprite goals
   for(auto& r : _sprites) {
-    r->action(p);
-  }
-  
-  // Render the next frame
-  for(auto& r : _sprites) {
-    r->render();
+    r->render(p);
   }
 }

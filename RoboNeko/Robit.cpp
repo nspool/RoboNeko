@@ -63,27 +63,18 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
   
 }
 
-void Robit::stop()
-{
-  _isStopped = true;
-  _stopTime = SDL_GetTicks();
-}
-
-void Robit::action(SDL_Point* target)
+void Robit::render(SDL_Point* target)
 {
   // TODO: Replace with a switch around the RobitState
   if(_isStopped) {
     SDL_Rect bounds = getBounds();
     if(SDL_PointInRect(target, &bounds)) {
       _stopTime = SDL_GetTicks();
-      return;
     }
     if( (SDL_GetTicks() - _stopTime) > 1000 ) {
       _isStopped = false;
       _wasStopped = true;
       _stopTime = SDL_GetTicks();
-    } else {
-      return;
     }
   }
   
@@ -91,47 +82,40 @@ void Robit::action(SDL_Point* target)
     if( (SDL_GetTicks() - _stopTime) > 1000 ) {
       _isStopped = false;
       _wasStopped = false;
-    } else {
-      return;
     }
   }
   
   SDL_Rect bounds = getBounds();
   if(SDL_PointInRect(target, &bounds)){
-    stop();
-    return;
+    _isStopped = true;
+    _stopTime = SDL_GetTicks();
   }
   
-  int width = 21;
-  int height = 31;
-  
-  // Interpolate the line between the current position and the target
-  SDL_Rect center = {_p.x + width / 2, _p.y + height / 2};
-  double rad = atan2((target->y - center.y), (target->x - center.x));
-  
-  // Set the new coordinates
-  _xDelta += cos(rad);
-  _yDelta += sin(rad);
-  
-  if(_xDelta > 1 || _xDelta < -1){
-    _p.x += (int)_xDelta;
-    _xDelta = 0;
+  if(!_isStopped && !_wasStopped) {
+    int width = 21;
+    int height = 31;
+    
+    // Interpolate the line between the current position and the target
+    SDL_Rect center = {_p.x + width / 2, _p.y + height / 2};
+    double rad = atan2((target->y - center.y), (target->x - center.x));
+    
+    // Set the new coordinates
+    _xDelta += cos(rad);
+    _yDelta += sin(rad);
+    
+    if(_xDelta > 1 || _xDelta < -1){
+      _p.x += (int)_xDelta;
+      _xDelta = 0;
+    }
+    
+    if(_yDelta > 1 || _yDelta < -1){
+      _p.y += (int)_yDelta;
+      _yDelta = 0;
+    }
   }
   
-  if(_yDelta > 1 || _yDelta < -1){
-    _p.y += (int)_yDelta;
-    _yDelta = 0;
-  }
-}
-
-SDL_Rect Robit::getBounds()
-{
-  return { _p.x, _p.y, 21, 31 };
-}
-
-void Robit::render()
-{
-  SDL_Rect bounds = getBounds();
+  bounds = getBounds();
+  
   if(_isStopped) {
     SDL_RenderCopy(_renderer, _texture, &_spriteClips[5], &bounds);
   } else if(_wasStopped) {
@@ -141,6 +125,13 @@ void Robit::render()
     constexpr int animationRate = 12;
     constexpr int animationLen = 3;
     int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
-    SDL_RenderCopy( _renderer, _texture, &_spriteClips[frameToDraw], &bounds );
+    SDL_RenderCopy( _renderer, _texture, &_spriteClips[frameToDraw], &bounds);
   }
 }
+
+SDL_Rect Robit::getBounds()
+{
+  return { _p.x, _p.y, 21, 31 };
+}
+
+

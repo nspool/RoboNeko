@@ -26,9 +26,9 @@ class Robit : public Sprite
 public:
   Robit(SDL_Renderer* _renderer, SDL_Point p);
   SDL_Rect getBounds();
-  void render();
-  void stop();
-  void action(SDL_Point* target);
+//  void render();
+//  void stop();
+  void render(SDL_Point* target);
 private:
   RobitState _state = RobitState::Pursue;
   bool _isCollided = false;
