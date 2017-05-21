@@ -20,9 +20,6 @@ void Scene::add(Sprite *sprite)
 
 void Scene::render(SDL_Point *p)
 {
-  std::vector<SDL_Rect> obsticles;
-
-  // Update the sprite goals
   for(auto& r : _sprites) {
     r->render(p);
   }

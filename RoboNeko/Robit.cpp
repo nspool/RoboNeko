@@ -10,12 +10,12 @@
 
 #include "robits.h"
 
-Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
+Robit::Robit(SDL_Renderer* renderer, SDL_Point initialPosition)
 {
-  _p = p;
+  _position = initialPosition;
   _renderer = renderer;
   
-  SDL_Surface* gRobits; // = IMG_Load("robits.png");
+  SDL_Surface* gRobits;
   Uint32 rmask, gmask, bmask, amask;
   rmask = 0x000000ff;
   gmask = 0x0000ff00;
@@ -29,35 +29,35 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
   }
   
   // Setup Robit animation
-  _spriteClips[0].x = 0;
-  _spriteClips[0].y = 0;
-  _spriteClips[0].w = 21;
-  _spriteClips[0].h = 31;
+  _frame[0].x = 0;
+  _frame[0].y = 0;
+  _frame[0].w = 21;
+  _frame[0].h = 31;
   
-  _spriteClips[1].x = 21;
-  _spriteClips[1].y = 0;
-  _spriteClips[1].w = 21;
-  _spriteClips[1].h = 31;
+  _frame[1].x = 21;
+  _frame[1].y = 0;
+  _frame[1].w = 21;
+  _frame[1].h = 31;
   
-  _spriteClips[2].x = 42;
-  _spriteClips[2].y = 0;
-  _spriteClips[2].w = 21;
-  _spriteClips[2].h = 31;
+  _frame[2].x = 42;
+  _frame[2].y = 0;
+  _frame[2].w = 21;
+  _frame[2].h = 31;
   
-  _spriteClips[3].x = 63;
-  _spriteClips[3].y = 0;
-  _spriteClips[3].w = 21;
-  _spriteClips[3].h = 31;
+  _frame[3].x = 63;
+  _frame[3].y = 0;
+  _frame[3].w = 21;
+  _frame[3].h = 31;
 
-  _spriteClips[4].x = 84;
-  _spriteClips[4].y = 0;
-  _spriteClips[4].w = 21;
-  _spriteClips[4].h = 31;
+  _frame[4].x = 84;
+  _frame[4].y = 0;
+  _frame[4].w = 21;
+  _frame[4].h = 31;
   
-  _spriteClips[5].x = 105;
-  _spriteClips[5].y = 0;
-  _spriteClips[5].w = 21;
-  _spriteClips[5].h = 31;
+  _frame[5].x = 105;
+  _frame[5].y = 0;
+  _frame[5].w = 21;
+  _frame[5].h = 31;
   
   _texture = SDL_CreateTextureFromSurface(renderer, gRobits);
   
@@ -96,7 +96,7 @@ void Robit::render(SDL_Point* target)
     int height = 31;
     
     // Interpolate the line between the current position and the target
-    SDL_Rect center = {_p.x + width / 2, _p.y + height / 2};
+    SDL_Rect center = {_position.x + width / 2, _position.y + height / 2};
     double rad = atan2((target->y - center.y), (target->x - center.x));
     
     // Set the new coordinates
@@ -104,12 +104,12 @@ void Robit::render(SDL_Point* target)
     _yDelta += sin(rad);
     
     if(_xDelta > 1 || _xDelta < -1){
-      _p.x += (int)_xDelta;
+      _position.x += (int)_xDelta;
       _xDelta = 0;
     }
     
     if(_yDelta > 1 || _yDelta < -1){
-      _p.y += (int)_yDelta;
+      _position.y += (int)_yDelta;
       _yDelta = 0;
     }
   }
@@ -117,21 +117,21 @@ void Robit::render(SDL_Point* target)
   bounds = getBounds();
   
   if(_isStopped) {
-    SDL_RenderCopy(_renderer, _texture, &_spriteClips[5], &bounds);
+    SDL_RenderCopy(_renderer, _texture, &_frame[5], &bounds);
   } else if(_wasStopped) {
-    SDL_RenderCopy(_renderer, _texture, &_spriteClips[3], &bounds);
+    SDL_RenderCopy(_renderer, _texture, &_frame[3], &bounds);
   }else {
     // Animate at some fixed framerate
     constexpr int animationRate = 12;
     constexpr int animationLen = 3;
     int frameToDraw = ((SDL_GetTicks() - _startTime) * animationRate / 1000) % animationLen;
-    SDL_RenderCopy( _renderer, _texture, &_spriteClips[frameToDraw], &bounds);
+    SDL_RenderCopy( _renderer, _texture, &_frame[frameToDraw], &bounds);
   }
 }
 
 SDL_Rect Robit::getBounds()
 {
-  return { _p.x, _p.y, 21, 31 };
+  return { _position.x, _position.y, 21, 31 };
 }
 
 

@@ -9,7 +9,6 @@
 #ifndef Scene_hpp
 #define Scene_hpp
 
-#include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
 

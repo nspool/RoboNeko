@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
   
   if(SDL_Init(SDL_INIT_EVERYTHING) < 0 )
   {
-    std::cout << "Failed to initialise SDL!" << std::endl;
+    printf("Failed to initialise SDL!\n");
     return 1;
   }
 
