@@ -8,13 +8,20 @@
 
 #include "Robit.hpp"
 
+#include "robits.h"
+
 Robit::Robit(SDL_Renderer* renderer, SDL_Point p)
 {
-  
   _p = p;
   _renderer = renderer;
   
-  SDL_Surface* gRobits = IMG_Load("robits.png");
+  SDL_Surface* gRobits; // = IMG_Load("robits.png");
+  Uint32 rmask, gmask, bmask, amask;
+  rmask = 0x000000ff;
+  gmask = 0x0000ff00;
+  bmask = 0x00ff0000;
+  amask = 0xff000000;
+  gRobits = SDL_CreateRGBSurfaceFrom((void*)robit_data.pixel_data, robit_data.width, robit_data.height, 32, robit_data.bytes_per_pixel*robit_data.width, rmask, gmask, bmask, amask);
   
   if(gRobits == 0)
   {

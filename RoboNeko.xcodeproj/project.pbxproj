@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		732522FF1ECD9DA4000614E8 /* robits.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 730A16EB1E8A715E003D7DBD /* robits.png */; };
 		73373CA21E7A8D8400E53F1C /* Robit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA01E7A8D8400E53F1C /* Robit.cpp */; };
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
 		735C24961E70000E00D37174 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C24951E70000E00D37174 /* SDL2.framework */; };
@@ -22,7 +21,6 @@
 			dstPath = .;
 			dstSubfolderSpec = 16;
 			files = (
-				732522FF1ECD9DA4000614E8 /* robits.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -30,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		730A16EB1E8A715E003D7DBD /* robits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robits.png; sourceTree = "<group>"; };
+		73372C121ED14FB90040BF3D /* robits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robits.h; sourceTree = "<group>"; };
 		73373CA01E7A8D8400E53F1C /* Robit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robit.cpp; sourceTree = "<group>"; };
 		73373CA11E7A8D8400E53F1C /* Robit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Robit.hpp; sourceTree = "<group>"; };
 		734F6E4F1EAF44B6008AAF17 /* Sprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Sprite.hpp; sourceTree = "<group>"; };
@@ -77,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				730A16EB1E8A715E003D7DBD /* robits.png */,
+				73372C121ED14FB90040BF3D /* robits.h */,
 			);
 			name = Assets;
 			sourceTree = "<group>";

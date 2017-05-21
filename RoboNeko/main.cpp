@@ -16,6 +16,8 @@
 #include "Scene.hpp"
 #include "Robit.hpp"
 
+#include "robits.h"
+
 SDL_Surface* _background = 0;
 SDL_Renderer* _renderer = 0;
 
@@ -30,18 +32,6 @@ int oldMouseY = 0;
 int windowX = 0;
 int windowY = 0;
 int currentTranceDirection = 0;
-
-SDL_Surface *load_image(std::string filename)
-{
-  SDL_Surface* loadedImage = 0;
-  SDL_Surface* optimisedImage = 0;
-  
-  loadedImage = SDL_LoadBMP(filename.c_str());
-  
-  SDL_FreeSurface(loadedImage);
-  
-  return optimisedImage;
-}
 
 int
 event_filter(void* userdata, SDL_Event* event)
@@ -86,8 +76,7 @@ int main(int argc, const char * argv[]) {
   SDL_SetEventFilter(event_filter, NULL);
   
   //Create window
-   SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN );
-
+  SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
   SDL_SetWindowTitle(window, "RoboNeko");
   
   if(window == 0)
