@@ -19,26 +19,20 @@
 #endif /* Robit_hpp */
 
 enum RobitState { Pursue, Stop, Wait, Sleep };
+struct Delta { double x; double y; };
 
 class Robit : public Sprite
 {
 public:
   Robit(SDL_Renderer* _renderer, SDL_Point p);
-  SDL_Rect getBounds();
   void render(SDL_Point* target);
 private:
   SDL_Renderer* _renderer;
   SDL_Texture* _spriteSheet;
-  SDL_Point _position;
+  SDL_Rect _position;
   RobitState _state = Pursue;
   std::vector<SDL_Rect> _frames;
-
+  Delta _delta = {0,0};
   int _lastChangeTime;
-  
-//  bool _isStopped = false;
-//  bool _wasStopped = false;
-  double _xDelta = 0;
-  double _yDelta = 0;
-  
   void changeState(RobitState newState);
 };

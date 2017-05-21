@@ -12,32 +12,32 @@
 
 Robit::Robit(SDL_Renderer* renderer, SDL_Point initialPosition)
 {
-  _position = initialPosition;
+  _position = { initialPosition.x, initialPosition.y, 21, 31 };
+  
   _renderer = renderer;
   
-  SDL_Surface* gRobits;
-  Uint32 rmask, gmask, bmask, amask;
-  rmask = 0x000000ff;
-  gmask = 0x0000ff00;
-  bmask = 0x00ff0000;
-  amask = 0xff000000;
-  gRobits = SDL_CreateRGBSurfaceFrom((void*)robit_data.pixel_data, robit_data.width, robit_data.height, 32, robit_data.bytes_per_pixel*robit_data.width, rmask, gmask, bmask, amask);
+  SDL_Surface* gRobits  = SDL_CreateRGBSurfaceFrom((void*)robit_data.pixel_data,
+                                                   robit_data.width,
+                                                   robit_data.height,
+                                                   32,
+                                                   robit_data.bytes_per_pixel*robit_data.width,
+                                                   0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
   
   if(gRobits == 0)
   {
     printf("Failed to load images! SDL_Error: %s\n", SDL_GetError());
+    return;
   }
   
-  constexpr int sprite_width = 21;
-  for(int i=0; i<(robit_data.width/sprite_width); i++) {
+  for(int i=0; i<(robit_data.width/_position.w); i++) {
     SDL_Rect r = SDL_Rect();
-    r.x =i*sprite_width;
+    r.x =i*_position.w;
     r.h = 0;
-    r.w = sprite_width;
+    r.w = _position.w;
     r.h = robit_data.height;
     _frames.push_back(r);
   }
-    
+  
   _spriteSheet = SDL_CreateTextureFromSurface(renderer, gRobits);
   
   changeState(Pursue);
@@ -50,70 +50,61 @@ void Robit::changeState(RobitState newState) {
 
 void Robit::render(SDL_Point* target)
 {
-  // TODO: Replace with a switch around the RobitState
-  if(_state == Stop) {
-    SDL_Rect bounds = getBounds();
-    if(SDL_PointInRect(target, &bounds)) {
-      _lastChangeTime = SDL_GetTicks();
-    }
-    if( (SDL_GetTicks() - _lastChangeTime) > 1000 ) {
-      changeState(Wait);
-      _lastChangeTime = SDL_GetTicks();
-    }
-  }
+  bool intervalElapsed = ((SDL_GetTicks() - _lastChangeTime) > 1000);
   
-  if(_state == Wait) {
-    if( (SDL_GetTicks() - _lastChangeTime) > 1000 ) {
-      changeState(Pursue);
-    }
-  }
-  
-  SDL_Rect bounds = getBounds();
-  if(SDL_PointInRect(target, &bounds)){
+  if(SDL_PointInRect(target, &_position)){
     changeState(Stop);
   }
   
-  if(!(_state == Stop) && !(_state == Wait)) {
-    int width = 21;
-    int height = 31;
-    
-    // Interpolate the line between the current position and the target
-    SDL_Rect center = {_position.x + width / 2, _position.y + height / 2};
-    double rad = atan2((target->y - center.y), (target->x - center.x));
-    
-    // Set the new coordinates
-    _xDelta += cos(rad);
-    _yDelta += sin(rad);
-    
-    if(_xDelta > 1 || _xDelta < -1){
-      _position.x += (int)_xDelta;
-      _xDelta = 0;
-    }
-    
-    if(_yDelta > 1 || _yDelta < -1){
-      _position.y += (int)_yDelta;
-      _yDelta = 0;
-    }
+  switch(_state){
+    case Sleep:
+      break;
+    case Stop:
+      if(intervalElapsed) {
+        changeState(Wait);
+      }
+      break;
+    case Wait:
+      if(intervalElapsed) {
+        changeState(Pursue);
+      }
+      break;
+    case Pursue:
+      
+      // Interpolate the line between the current position and the target
+      SDL_Rect center = {_position.x + _position.w / 2, _position.y + _position.h / 2};
+      double rad = atan2((target->y - center.y), (target->x - center.x));
+      
+      // Set the new coordinates
+      _delta.x += cos(rad);
+      _delta.y += sin(rad);
+      
+      if(_delta.x > 1 || _delta.x < -1){
+        _position.x += (int)_delta.x;
+        _delta.x = 0;
+      }
+      
+      if(_delta.y > 1 || _delta.y < -1){
+        _position.y += (int)_delta.y;
+        _delta.y = 0;
+      }
+      break;
   }
   
-  bounds = getBounds();
-  
-  if(_state == Stop) {
-    SDL_RenderCopy(_renderer, _spriteSheet, &_frames[5], &bounds);
-  } else if(_state == Wait) {
-    SDL_RenderCopy(_renderer, _spriteSheet, &_frames[3], &bounds);
-  }else {
-    // Animate at some fixed framerate
-    constexpr int animationRate = 12;
-    constexpr int animationLen = 3;
-    int frameToDraw = ((SDL_GetTicks() - _lastChangeTime) * animationRate / 1000) % animationLen;
-    SDL_RenderCopy( _renderer, _spriteSheet, &_frames[frameToDraw], &bounds);
+  switch(_state){
+    case Sleep:
+      break;
+    case Stop:
+      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[5], &_position);
+      break;
+    case Wait:
+      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[3], &_position);
+      break;
+    case Pursue:
+      constexpr int animationRate = 12;
+      constexpr int animationLen = 3;
+      int frameToDraw = ((SDL_GetTicks() - _lastChangeTime) * animationRate / 1000) % animationLen;
+      SDL_RenderCopy( _renderer, _spriteSheet, &_frames[frameToDraw], &_position);
+      break;
   }
 }
-
-SDL_Rect Robit::getBounds()
-{
-  return { _position.x, _position.y, 21, 31 };
-}
-
-

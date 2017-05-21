@@ -25,7 +25,11 @@ int main(int argc, const char * argv[]) {
     return 1;
   }
 
-  SDL_Window* window = SDL_CreateWindow("RoboNeko", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+  SDL_Window* window = SDL_CreateWindow("RoboNeko",
+                                        SDL_WINDOWPOS_UNDEFINED,
+                                        SDL_WINDOWPOS_UNDEFINED,
+                                        WINDOW_WIDTH, WINDOW_HEIGHT,
+                                        SDL_WINDOW_SHOWN);
   if(window == 0)
   {
     printf("SDL_CreateWindow: SDL_Error: %s\n", SDL_GetError());

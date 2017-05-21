@@ -15,7 +15,6 @@ struct Sprite
 {
 public:
   virtual void render(SDL_Point* target) {}
-  virtual SDL_Rect getBounds() { return SDL_Rect(); }
 };
 
 #endif /* Sprite_hpp */
