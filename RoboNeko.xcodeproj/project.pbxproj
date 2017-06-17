@@ -11,6 +11,7 @@
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
 		735C24961E70000E00D37174 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C24951E70000E00D37174 /* SDL2.framework */; };
 		739E72361E8BB23B006F704E /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 739E72341E8BB23B006F704E /* Scene.cpp */; };
+		73CE6A871EF5353F005CF5F7 /* roboneko.icns in Resources */ = {isa = PBXBuildFile; fileRef = 73CE6A841EF53373005CF5F7 /* roboneko.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +36,8 @@
 		735C24951E70000E00D37174 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		739E72341E8BB23B006F704E /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
 		739E72351E8BB23B006F704E /* Scene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
+		73CE6A841EF53373005CF5F7 /* roboneko.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = roboneko.icns; sourceTree = "<group>"; };
+		73CE6A851EF533A2005CF5F7 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,7 @@
 		734D18551E8F61DE0002C626 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				73CE6A841EF53373005CF5F7 /* roboneko.icns */,
 				73372C121ED14FB90040BF3D /* robits.h */,
 			);
 			name = Assets;
@@ -107,6 +111,7 @@
 		735C248C1E6FFFDB00D37174 /* RoboNeko */ = {
 			isa = PBXGroup;
 			children = (
+				73CE6A851EF533A2005CF5F7 /* info.plist */,
 				734D18551E8F61DE0002C626 /* Assets */,
 				734D18561E8F61E30002C626 /* Main */,
 				734D18531E8F61510002C626 /* Scene */,
@@ -133,6 +138,7 @@
 				735C24861E6FFFDB00D37174 /* Sources */,
 				735C24871E6FFFDB00D37174 /* Frameworks */,
 				735C24881E6FFFDB00D37174 /* CopyFiles */,
+				73CE6A861EF53539005CF5F7 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -154,6 +160,7 @@
 				TargetAttributes = {
 					735C24891E6FFFDB00D37174 = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = BBMD5EQBE2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -174,6 +181,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73CE6A861EF53539005CF5F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73CE6A871EF5353F005CF5F7 /* roboneko.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		735C24861E6FFFDB00D37174 /* Sources */ = {
@@ -229,6 +247,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,6 +289,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -279,22 +299,32 @@
 		735C24921E6FFFDB00D37174 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = BBMD5EQBE2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
+				INFOPLIST_FILE = "$(SRCROOT)/RoboNeko/info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.nspool.roboneko;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		735C24931E6FFFDB00D37174 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = BBMD5EQBE2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
+				INFOPLIST_FILE = "$(SRCROOT)/RoboNeko/info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.nspool.roboneko;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
