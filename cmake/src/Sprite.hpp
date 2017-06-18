@@ -9,7 +9,7 @@
 #ifndef Sprite_hpp
 #define Sprite_hpp
 
-#include <SDL2/SDL.h>
+#include "SDL.h"
 
 struct Sprite
 {
