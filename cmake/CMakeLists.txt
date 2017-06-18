@@ -1,0 +1,17 @@
+project(RoboNeko)
+
+cmake_minimum_required(VERSION 3.6)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+file( GLOB LIB_SOURCES src/*.cpp )
+file( GLOB LIB_HEADERS src/*.h )
+
+add_executable(${PROJECT_NAME} ${LIB_SOURCES} ${LIB_HEADERS} src/robits.h)
+
+INCLUDE(FindPkgConfig)
+
+PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+
+INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES})
