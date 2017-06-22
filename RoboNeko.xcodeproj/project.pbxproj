@@ -11,8 +11,6 @@
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
 		735C24961E70000E00D37174 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C24951E70000E00D37174 /* SDL2.framework */; };
 		739E72361E8BB23B006F704E /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 739E72341E8BB23B006F704E /* Scene.cpp */; };
-		73F25B7D1EF687550046FF30 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73F25B7C1EF687550046FF30 /* Media.xcassets */; };
-		73F25B7F1EF6884C0046FF30 /* roboneko.icns in Resources */ = {isa = PBXBuildFile; fileRef = 73F25B7E1EF6884C0046FF30 /* roboneko.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,9 +35,6 @@
 		735C24951E70000E00D37174 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		739E72341E8BB23B006F704E /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
 		739E72351E8BB23B006F704E /* Scene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
-		73CE6A851EF533A2005CF5F7 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = info.plist; sourceTree = "<group>"; };
-		73F25B7C1EF687550046FF30 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		73F25B7E1EF6884C0046FF30 /* roboneko.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = roboneko.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +87,6 @@
 		735C24811E6FFFDB00D37174 = {
 			isa = PBXGroup;
 			children = (
-				73F25B7C1EF687550046FF30 /* Media.xcassets */,
 				735C248C1E6FFFDB00D37174 /* RoboNeko */,
 				735C248B1E6FFFDB00D37174 /* Products */,
 				735C24941E70000E00D37174 /* Frameworks */,
@@ -113,8 +107,6 @@
 		735C248C1E6FFFDB00D37174 /* RoboNeko */ = {
 			isa = PBXGroup;
 			children = (
-				73F25B7E1EF6884C0046FF30 /* roboneko.icns */,
-				73CE6A851EF533A2005CF5F7 /* info.plist */,
 				734D18551E8F61DE0002C626 /* Assets */,
 				734D18561E8F61E30002C626 /* Main */,
 				734D18531E8F61510002C626 /* Scene */,
@@ -190,8 +182,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73F25B7D1EF687550046FF30 /* Media.xcassets in Resources */,
-				73F25B7F1EF6884C0046FF30 /* roboneko.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
