@@ -10,7 +10,7 @@
 #define Scene_hpp
 
 #include <vector>
-#include "SDL.h"
+#include <SDL2/SDL.h>
 
 #endif /* Scene_hpp */
 

@@ -1,18 +1,20 @@
-project(RoboNeko)
-
 cmake_minimum_required(VERSION 3.6)
-
+project(RoboNeko CXX)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-
-file( GLOB LIB_SOURCES src/*.cpp )
-file( GLOB LIB_HEADERS src/*.h )
-
-add_executable(${PROJECT_NAME} ${LIB_SOURCES} ${LIB_HEADERS} src/robits.h)
-
-INCLUDE(FindPkgConfig)
-
-PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
-
-INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES})
+find_package(SDL2 REQUIRED)
+file(GLOB SOURCES src/*.cpp)
+file(GLOB HEADERS src/*.h*)
+if(APPLE)
+	set(MACOSX_BUNDLE_ICON_FILE roboneko.icns)
+        set(RoboNeko_ICON ${CMAKE_CURRENT_SOURCE_DIR}/resources/roboneko.icns)
+        set_source_files_properties(${RoboNeko_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+        add_executable(RoboNeko MACOSX_BUNDLE ${SOURCES} ${HEADERS} ${RoboNeko_ICON})
+else(WIN32)
+	set(WIN_RESOURCE_FILE ${CMAKE_CURRENT_SOURCE_DIR}/resources/roboneko.rc)
+        add_executable(RoboNeko ${SOURCES} ${HEADERS} ${WIN_RESOURCE_FILE})
+else()
+	add_executable(RoboNeko ${SOURCES} ${HEADERS}) 
+endif()
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
 
