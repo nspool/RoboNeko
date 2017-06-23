@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		732C066E1EFBB96F00B76D1E /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 732C066D1EFBB96F00B76D1E /* info.plist */; };
 		73373CA21E7A8D8400E53F1C /* Robit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73373CA01E7A8D8400E53F1C /* Robit.cpp */; };
 		735C248E1E6FFFDB00D37174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 735C248D1E6FFFDB00D37174 /* main.cpp */; };
 		735C24961E70000E00D37174 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C24951E70000E00D37174 /* SDL2.framework */; };
@@ -26,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		732C066D1EFBB96F00B76D1E /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = info.plist; sourceTree = "<group>"; };
 		73372C121ED14FB90040BF3D /* robits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robits.h; sourceTree = "<group>"; };
 		73373CA01E7A8D8400E53F1C /* Robit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robit.cpp; sourceTree = "<group>"; };
 		73373CA11E7A8D8400E53F1C /* Robit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Robit.hpp; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		735C248C1E6FFFDB00D37174 /* RoboNeko */ = {
 			isa = PBXGroup;
 			children = (
+				732C066D1EFBB96F00B76D1E /* info.plist */,
 				734D18551E8F61DE0002C626 /* Assets */,
 				734D18561E8F61E30002C626 /* Main */,
 				734D18531E8F61510002C626 /* Scene */,
@@ -182,6 +185,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				732C066E1EFBB96F00B76D1E /* info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +298,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = BBMD5EQBE2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -310,6 +315,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = BBMD5EQBE2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
