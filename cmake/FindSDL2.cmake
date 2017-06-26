@@ -160,4 +160,15 @@ ENDIF(SDL2_LIBRARY_TEMP)
 
 INCLUDE(FindPackageHandleStandardArgs)
 
+
+IF(WIN32)
+    set(SDL2_INCLUDE_DIR "C:/SDL2-2.0.5/include/")
+    # Support both 32 and 64 bit builds
+    if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
+        set(SDL2_LIBRARY "C:/SDL2-2.0.5/lib/x64/SDL2.lib;C:/SDL2-2.0.5/lib/x64/SDL2main.lib")
+    else ()
+        set(SDL2_LIBRARY "C:/SDL2-2.0.5/lib/x86/SDL2.lib;C:/SDL2-2.0.5/lib/x86/SDL2main.lib")
+    endif ()
+ENDIF(WIN32)
+
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2 REQUIRED_VARS SDL2_LIBRARY SDL2_INCLUDE_DIR)
