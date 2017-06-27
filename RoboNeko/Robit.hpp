@@ -18,7 +18,7 @@
 
 #endif /* Robit_hpp */
 
-enum RobitState { Pursue, Stop, Wait, Sleep };
+enum RobitState { Pursue, Stop, Alert, Wait, Yawn, Sleep };
 struct Delta { double x; double y; };
 
 class Robit : public Sprite

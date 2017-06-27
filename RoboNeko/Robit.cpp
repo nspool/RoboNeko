@@ -44,6 +44,7 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point initialPosition)
 }
 
 void Robit::changeState(RobitState newState) {
+  if(newState == _state) { return; }
   _state = newState;
   _lastChangeTime = SDL_GetTicks();
 }
@@ -53,7 +54,15 @@ void Robit::render(SDL_Point* target)
   bool intervalElapsed = ((SDL_GetTicks() - _lastChangeTime) > 1000);
   
   if(SDL_PointInRect(target, &_position)){
-    changeState(Stop);
+    if(_state == Pursue){
+      changeState(Stop);
+    }
+  } else {
+    if(_state == Sleep) {
+      changeState(Alert);
+    } else  if(_state == Yawn || _state == Wait) {
+      changeState(Pursue);
+    }
   }
   
   switch(_state){
@@ -66,11 +75,20 @@ void Robit::render(SDL_Point* target)
       break;
     case Wait:
       if(intervalElapsed) {
+        changeState(Yawn);
+      }
+      break;
+    case Yawn:
+      if(intervalElapsed) {
+        changeState(Sleep);
+      }
+      break;
+    case Alert:
+      if(intervalElapsed) {
         changeState(Pursue);
       }
       break;
     case Pursue:
-      
       // Interpolate the line between the current position and the target
       SDL_Rect center = {_position.x + _position.w / 2, _position.y + _position.h / 2};
       double rad = atan2((target->y - center.y), (target->x - center.x));
@@ -92,13 +110,20 @@ void Robit::render(SDL_Point* target)
   }
   
   switch(_state){
-    case Sleep:
+    case Yawn:
+      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[7], &_position);
       break;
-    case Stop:
+    case Sleep:
       SDL_RenderCopy(_renderer, _spriteSheet, &_frames[5], &_position);
       break;
-    case Wait:
+    case Stop:
+      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[4], &_position);
+      break;
+    case Alert:
       SDL_RenderCopy(_renderer, _spriteSheet, &_frames[3], &_position);
+      break;
+    case Wait:
+      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[6], &_position);
       break;
     case Pursue:
       constexpr int animationRate = 12;
