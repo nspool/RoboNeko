@@ -50,7 +50,7 @@ int main(int argc, const char * argv[]) {
   
   Scene* scene = new Scene(renderer);
   
-  Sprite* robit = new Robit(renderer, {(int)arc4random_uniform(WINDOW_WIDTH), (int)arc4random_uniform(WINDOW_HEIGHT)});
+  Sprite* robit = new Robit(renderer, {WINDOW_WIDTH/2, WINDOW_HEIGHT/2});
   
   scene->add(robit);
 
