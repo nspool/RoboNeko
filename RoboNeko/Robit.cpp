@@ -109,12 +109,17 @@ void Robit::render(SDL_Point* target)
       break;
   }
   
+  constexpr int animationRate = 12;
+
+  int frameToDraw = 0;
+
   switch(_state){
     case Yawn:
-      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[7], &_position);
+      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[8], &_position);
       break;
     case Sleep:
-      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[5], &_position);
+      frameToDraw = ((SDL_GetTicks() - _lastChangeTime) / 1000);
+      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[frameToDraw % 2 + 5], &_position);
       break;
     case Stop:
       SDL_RenderCopy(_renderer, _spriteSheet, &_frames[4], &_position);
@@ -123,13 +128,11 @@ void Robit::render(SDL_Point* target)
       SDL_RenderCopy(_renderer, _spriteSheet, &_frames[3], &_position);
       break;
     case Wait:
-      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[6], &_position);
+      SDL_RenderCopy(_renderer, _spriteSheet, &_frames[7], &_position);
       break;
     case Pursue:
-      constexpr int animationRate = 12;
-      constexpr int animationLen = 3;
-      int frameToDraw = ((SDL_GetTicks() - _lastChangeTime) * animationRate / 1000) % animationLen;
-      SDL_RenderCopy( _renderer, _spriteSheet, &_frames[frameToDraw], &_position);
+      frameToDraw = ((SDL_GetTicks() - _lastChangeTime) * animationRate / 1000);
+      SDL_RenderCopy( _renderer, _spriteSheet, &_frames[frameToDraw % 3], &_position);
       break;
   }
 }
