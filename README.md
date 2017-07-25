@@ -11,12 +11,11 @@ Due to limitations with SDL the robot is confined to the window.
 The only dependency is SDL2. To build with CMake:
 
 
-    ````
     cd RoboNeko
     mkdir build
     cd build
     cmake ..
     make
-    ````
 
 
+Alternatively an Xcode 8 project file is provided for macOS. Just make sure the SDL2.framework is installed in /Library/Frameworks
