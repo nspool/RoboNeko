@@ -19,7 +19,7 @@ constexpr unsigned int WINDOW_HEIGHT = 480;
 
 int main(int argc, const char * argv[]) {
   
-  if(SDL_Init(SDL_INIT_EVERYTHING) < 0 )
+  if(SDL_Init(SDL_INIT_TIMER|SDL_INIT_VIDEO) < 0 )
   {
     printf("Failed to initialise SDL!\n");
     return 1;
