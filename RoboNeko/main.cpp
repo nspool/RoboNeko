@@ -18,10 +18,10 @@ int WINDOW_WIDTH = 640;
 int WINDOW_HEIGHT = 480;
 
 int main(int argc, char * argv[]) {
-  
+
   if(SDL_Init(SDL_INIT_TIMER|SDL_INIT_VIDEO) < 0 )
   {
-    printf("Failed to initialise SDL!\n");
+    SDL_Log("Failed to initialise SDL!\n");
     return 1;
   }
 
@@ -32,35 +32,35 @@ int main(int argc, char * argv[]) {
                                         SDL_WINDOW_SHOWN);
   if(window == 0)
   {
-    printf("SDL_CreateWindow: SDL_Error: %s\n", SDL_GetError());
+    SDL_Log("SDL_CreateWindow: SDL_Error: %s\n", SDL_GetError());
     return 1;
   }
-  
+
   SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if(renderer == 0)
   {
-    printf("SDL_CreateRenderer: SDL Error: %s\n", SDL_GetError());
+    SDL_Log("SDL_CreateRenderer: SDL Error: %s\n", SDL_GetError());
     return 1;
   }
-  
+
   SDL_SetWindowTitle(window, "RoboNeko");
   SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
   // Initialize
-  
+
   Scene* scene = new Scene(renderer);
 
   Sprite* robit = new Robit(renderer, {WINDOW_WIDTH/2, WINDOW_HEIGHT/2});
-  
+
   scene->add(robit);
 
   // Main event loop
-  
+
   SDL_Event e;
   bool quit = false;
 
   do {
-    
+
     if(SDL_PollEvent(&e) != 0)
     {
       if (e.type == SDL_QUIT) {
@@ -73,16 +73,16 @@ int main(int argc, char * argv[]) {
     SDL_GetGlobalMouseState(&mouseX, &mouseY);
     SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0 );
     SDL_RenderClear(renderer);
-    
+
     SDL_Point mousePoint = {mouseX - windowX, mouseY - windowY};
     scene->render(&mousePoint);
 
     SDL_RenderPresent(renderer);
-    
+
   } while(!quit);
-  
+
   SDL_DestroyWindow(window);
   SDL_Quit();
-  
+
   return 0;
 }

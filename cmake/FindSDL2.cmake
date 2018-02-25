@@ -165,9 +165,9 @@ IF(WIN32)
     set(SDL2_INCLUDE_DIR "$ENV{SDL2_DIR}/include/")
     # Support both 32 and 64 bit builds
     if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
-        set(SDL2_LIBRARY "$ENV{SDL2_DIR}/lib/x64/SDL2.lib;$ENV{SDL2_DIR}/lib/x64/SDL2main.lib")
+        set(SDL2_LIBRARY "$ENV{SDL2_DIR}/lib/x64/SDL2main.lib;$ENV{SDL2_DIR}/lib/x64/SDL2.lib")
     else ()
-        set(SDL2_LIBRARY "$ENV{SDL2_DIR}/lib/x86/SDL2.lib;$ENV{SDL2_DIR}/lib/x86/SDL2main.lib")
+        set(SDL2_LIBRARY "$ENV{SDL2_DIR}/lib/x86/SDL2main.lib;$ENV{SDL2_DIR}/lib/x86/SDL2.lib")
     endif ()
 ENDIF(WIN32)
 
