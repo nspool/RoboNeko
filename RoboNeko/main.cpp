@@ -14,10 +14,10 @@
 
 #include "robits.h"
 
-constexpr unsigned int WINDOW_WIDTH = 640;
-constexpr unsigned int WINDOW_HEIGHT = 480;
+int WINDOW_WIDTH = 640;
+int WINDOW_HEIGHT = 480;
 
-int main(int argc, const char * argv[]) {
+int main(int argc, char * argv[]) {
   
   if(SDL_Init(SDL_INIT_TIMER|SDL_INIT_VIDEO) < 0 )
   {
@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
   // Initialize
   
   Scene* scene = new Scene(renderer);
-  
+
   Sprite* robit = new Robit(renderer, {WINDOW_WIDTH/2, WINDOW_HEIGHT/2});
   
   scene->add(robit);

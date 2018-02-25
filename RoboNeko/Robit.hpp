@@ -11,8 +11,8 @@
 
 #include <vector>
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_timer.h>
+#include <SDL.h>
+#include <SDL_timer.h>
 
 #include "Sprite.hpp"
 
@@ -30,9 +30,9 @@ private:
   SDL_Renderer* _renderer;
   SDL_Texture* _spriteSheet;
   SDL_Rect _position;
-  RobitState _state = Pursue;
+  RobitState _state;
   std::vector<SDL_Rect> _frames;
-  Delta _delta = {0,0};
+  Delta _delta;
   int _lastChangeTime;
   void changeState(RobitState newState);
 };

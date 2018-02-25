@@ -1,9 +1,9 @@
 /* GIMP RGBA C-Source image dump (robits.c) */
 
 static const struct {
-  uint  	 width;
-  uint  	 height;
-  uint  	 bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */
+  unsigned int  	 width;
+  unsigned int  	 height;
+  unsigned int  	 bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */
   unsigned char 	 pixel_data[189 * 31 * 4 + 1];
 } robit_data = {
   189, 31, 4,

@@ -12,7 +12,13 @@
 
 Robit::Robit(SDL_Renderer* renderer, SDL_Point initialPosition)
 {
-  _position = { initialPosition.x, initialPosition.y, 21, 31 };
+  _state = Pursue;
+  _delta.x = 0;
+  _delta.y = 0;
+  _position.x = initialPosition.x;
+  _position.y = initialPosition.y;
+  _position.w = 21;
+  _position.h = 31;
   
   _renderer = renderer;
   
@@ -109,7 +115,7 @@ void Robit::render(SDL_Point* target)
       break;
   }
   
-  constexpr int animationRate = 12;
+  int animationRate = 12;
 
   int frameToDraw = 0;
 
