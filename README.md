@@ -4,7 +4,7 @@
 
 The classic Neko applet for X11, now with more robot! Written in C++ with SDL2.
 
-Developed to learn and demonstrate cross-platform development with CMake.
+To learn and demonstrate cross-platform SDL development with CMake.
 
 Due to limitations with SDL the robot is confined to the window.
 
@@ -12,17 +12,21 @@ Due to limitations with SDL the robot is confined to the window.
 
 ### macOS
 
-Make sure the SDL2.framework is installed in /Library/Frameworks/.
+This has been tested with Xcode 9 with CMake 3.9.4.
 
-[TODO]
+Download the SDL2.framework and drag it into /Library/Frameworks/.
 
-### Linux
+    git clone https://github.com/nspool/RoboNeko.git
+    cd RoboNeko && mkdir build && cd build
+    cmake -G Xcode ..
+    open RoboNeko.xcodeproj
 
-The build with CMake:
+### Linux / BSD
 
-    cd RoboNeko
-    mkdir build
-    cd build
+Make sure the the SDL2 development libraries have been installed through your distribution's package manager.
+
+    git clone https://github.com/nspool/RoboNeko.git
+    cd RoboNeko && mkdir build && cd build
     cmake ..
     make
 
