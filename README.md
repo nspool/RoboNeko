@@ -32,6 +32,25 @@ Make sure the the SDL2 development libraries have been installed through your di
 
 ### Windows
 
-Unpack the SDL2 development files and set the SDL2_DIR environment variable to point at the directory location. Also make sure that SDL2.dll is in a folder your path.
+#### Code::Blocks
 
-Opening the RoboNeko folder in Visual Studio 2017 will automatically create a project based on the CMake settings and allow you to build and debug from the IDE.
+Code::Blocks appears to only support a 32-bit version of MinGW. This will work fine provided that SDL2.dll is 32-bit.
+
+Download the SDL2 development files and from the command prompt set the SDL2_DIR environment variable with UNIX-style forward slash:
+
+    setx SDL2_DIR C:/SDL-2.0.7
+
+Close and reopen the command prompt and create the Code::Blocks project file with CMake:
+
+    cd RoboNeko
+    mkdir build
+    cd build
+    cmake -G "CodeBlocks" ..
+
+Then open RoboNeko.cbp in the Code::Blocks IDE.
+
+#### Visual Studio
+
+Unpack the SDL2 development files and set the SDL2_DIR environment variable to point at the directory location in the same way as the previous example. Also make sure that SDL2.dll is in a folder your path. Either 32-bit or 64-bit versions appear to work fine.
+
+As of Visual Studio 2017 it isn't necessary to explicitly generate a solution with CMake. Instead, opening the RoboNeko folder in Visual Studio 2017 will automatically create a project based on the CMake settings and allow you to build and debug from the IDE.
