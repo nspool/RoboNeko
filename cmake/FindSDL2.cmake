@@ -78,7 +78,7 @@ SET(SDL2_SEARCH_PATHS
 
 FIND_PATH(SDL2_INCLUDE_DIR SDL.h
 	HINTS
-	$ENV{SDL2_DIR}
+	${SDL2_DIR}
 	PATH_SUFFIXES include/SDL2 include
 	PATHS ${SDL2_SEARCH_PATHS}
 )
@@ -86,7 +86,7 @@ FIND_PATH(SDL2_INCLUDE_DIR SDL.h
 FIND_LIBRARY(SDL2_LIBRARY_TEMP
 	NAMES SDL2
 	HINTS
-	$ENV{SDL2_DIR}
+	${SDL2_DIR}
 	PATH_SUFFIXES lib64 lib
 	PATHS ${SDL2_SEARCH_PATHS}
 )
@@ -100,7 +100,7 @@ IF(NOT SDL2_BUILDING_LIBRARY)
 		FIND_LIBRARY(SDL2MAIN_LIBRARY
 			NAMES SDL2main
 			HINTS
-			$ENV{SDL2_DIR}
+			${SDL2_DIR}
 			PATH_SUFFIXES lib64 lib
 			PATHS ${SDL2_SEARCH_PATHS}
 		)
@@ -162,12 +162,12 @@ INCLUDE(FindPackageHandleStandardArgs)
 
 
 IF(WIN32)
-    set(SDL2_INCLUDE_DIR "$ENV{SDL2_DIR}/include/")
+    set(SDL2_INCLUDE_DIR "${SDL2_DIR}/include/")
     # Support both 32 and 64 bit builds
     if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
-        set(SDL2_LIBRARY "$ENV{SDL2_DIR}/lib/x64/SDL2main.lib;$ENV{SDL2_DIR}/lib/x64/SDL2.lib")
+        set(SDL2_LIBRARY "${SDL2_DIR}/lib/x64/SDL2main.lib;${SDL2_DIR}/lib/x64/SDL2.lib")
     else ()
-        set(SDL2_LIBRARY "$ENV{SDL2_DIR}/lib/x86/SDL2main.lib;$ENV{SDL2_DIR}/lib/x86/SDL2.lib")
+        set(SDL2_LIBRARY "${SDL2_DIR}/lib/x86/SDL2main.lib;${SDL2_DIR}/lib/x86/SDL2.lib")
     endif ()
 ENDIF(WIN32)
 
