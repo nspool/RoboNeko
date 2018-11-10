@@ -34,18 +34,10 @@ Make sure the the SDL2 development libraries have been installed through your di
 
 #### Code::Blocks
 
-Code::Blocks appears to only support a 32-bit version of MinGW. This will work fine provided that SDL2.dll is 32-bit.
+From within the source directory, create a build folder and optionally specify the CMAKE_BUILD_TYPE:
 
-Download the SDL2 development files and from the command prompt set the SDL2_DIR environment variable with UNIX-style forward slash:
-
-    setx SDL2_DIR C:/SDL-2.0.7
-
-Close and reopen the command prompt and create the Code::Blocks project file with CMake:
-
-    cd RoboNeko
-    mkdir build
-    cd build
-    cmake -G "CodeBlocks" ..
+    mkdir build && cd build
+    cmake -G "CodeBlocks" -DSDL2_DIR=C:/SDL-2.0.9/x86_64-w64-mingw32 -DCMAKE_BUILD_TYPE=Debug  ..
 
 Then open RoboNeko.cbp in the Code::Blocks IDE.
 
