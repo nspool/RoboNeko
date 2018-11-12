@@ -17,8 +17,10 @@
 int WINDOW_WIDTH = 640;
 int WINDOW_HEIGHT = 480;
 
+#ifdef __MINGW32__
 #ifdef main
 # undef main
+#endif /* main */
 #endif /* main */
 
 int main(int argc, char * argv[]) {

@@ -35,7 +35,7 @@ Robit::Robit(SDL_Renderer* renderer, SDL_Point initialPosition)
     return;
   }
 
-  for(int i=0; i<(robit_data.width/_position.w); i++) {
+  for(int i=0; i< (robit_data.width/_position.w); i++) {
     SDL_Rect r = SDL_Rect();
     r.x =i*_position.w;
     r.h = 0;
