@@ -3,7 +3,7 @@
 //  RoboNeko
 //
 //  Created by nsp on 29/3/17.
-//  Copyright © 2017 nspool. All rights reserved.
+//  Copyright 2017 nspool. All rights reserved.
 //
 
 #ifndef Scene_hpp
@@ -12,9 +12,9 @@
 #include <vector>
 #include <SDL.h>
 
-#endif /* Scene_hpp */
+#endif
 
-#include "Sprite.hpp"
+#include "sprite.hpp"
 
 class Scene
 {

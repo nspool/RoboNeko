@@ -3,10 +3,10 @@
 //  RoboNeko
 //
 //  Created by nsp on 29/3/17.
-//  Copyright © 2017 nspool. All rights reserved.
+//  Copyright 2017 nspool. All rights reserved.
 //
 
-#include "Scene.hpp"
+#include "scene.hpp"
 
 Scene::Scene(SDL_Renderer* renderer)
 {
@@ -18,9 +18,10 @@ void Scene::add(Sprite *sprite)
   _sprites.push_back(sprite);
 }
 
-void Scene::render(SDL_Point *p)
+void Scene::render(SDL_Point *target)
 {
   for(auto& r : _sprites) {
-    r->render(p);
+    r->evaluate(target);
+    r->render(_renderer);
   }
 }
