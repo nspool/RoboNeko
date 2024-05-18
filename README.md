@@ -12,9 +12,9 @@ Due to limitations with SDL the robot is confined to the window.
 
 ### macOS
 
-This has been tested with Xcode 9 with CMake 3.9.4.
+This has been tested with Xcode 15.4 with CMake 3.29.3 and SDL 2.30.3.
 
-Download the SDL2.framework and drag it into /Library/Frameworks/.
+Download the SDL2.framework and drag it into /Library/Frameworks/. Alternatively, install libSDL2 from Homebrew.
 
     git clone https://github.com/nspool/RoboNeko.git
     cd RoboNeko && mkdir build && cd build
@@ -32,11 +32,11 @@ Make sure the the SDL2 development libraries have been installed through your di
 
 ### Windows
 
-Set the SDL2_DIR variable in the CMakeLists.txt to point to the SDL 2.0.9 development files. The following commands assume the CMD interpreter.
+Set the `SDL2_DIR` variable in the CMakeLists.txt to point to the SDL 2.0.9 development files. The following commands assume the CMD interpreter.
 
 #### Code::Blocks
 
-From within the source directory, create a build folder and optionally specify the CMAKE_BUILD_TYPE:
+From within the source directory, create a build folder and optionally specify the `CMAKE_BUILD_TYPE`:
 
     git clone https://github.com/nspool/RoboNeko.git
     cd RoboNeko & mkdir build & cd build
